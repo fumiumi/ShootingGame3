@@ -366,3 +366,4 @@ FodyWeavers.xsd
 DxLib_VC/
 
 # Build directories
+x64/
