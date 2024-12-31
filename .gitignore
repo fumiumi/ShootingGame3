@@ -367,3 +367,5 @@ DxLib_VC/
 
 # Build directories
 x64/
+/Shooting3/Shooting3.vcxproj
+/Shooting3/Shooting3.vcxproj.filters
