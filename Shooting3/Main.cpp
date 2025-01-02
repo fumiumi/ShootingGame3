@@ -71,7 +71,11 @@ void DrawFrameRate();
 /// <param name="lpCmdLine">コマンドライン引数</param>
 /// <param name="nCmdShow">ウィンドウの表示状態</param>
 /// <returns>アプリケーションの終了コード</returns>
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(
+	_In_ HINSTANCE hInstance, 
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPSTR lpCmdLine, 
+	_In_ int nCmdShow)
 {
 	//メモリリーク検出のために記述
 #if defined(_WIN64) || defined(_WIN32)
@@ -152,7 +156,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 	}
 
-	//DXライブラリの終了処理
+  //メモリの開放
+	GameInfo::Destroy();
 	DxLib_End();
 
 	return 0;

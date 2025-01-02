@@ -369,3 +369,7 @@ DxLib_VC/
 x64/
 /Shooting3/Shooting3.vcxproj
 /Shooting3/Shooting3.vcxproj.filters
+
+# Assets
+
+Assets/
