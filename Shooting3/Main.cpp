@@ -85,6 +85,10 @@ int WINAPI WinMain(
 	//ログファイルは出力しない設定にする
 	SetOutApplicationLogValidFlag(FALSE);
 
+	//DXライブラリの文字コード設定
+	// プロジェクトのエンコード方式がもうshift-jisのためこれはやめる
+	//SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
+
 	//ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 

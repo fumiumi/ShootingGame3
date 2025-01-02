@@ -5,8 +5,19 @@
 /// </summary>
 namespace
 {
+  /// <summary>
+  /// 解像度横幅
+  /// </summary>
   int kWidth = 1280;
+
+  /// <summary>
+  /// 解像度縦幅
+  /// </summary>
   int kHeight = 720;
+
+  /// <summary>
+  /// カラービット数
+  /// </summary>
   int kColorBit = 32;
 }
 
@@ -42,7 +53,7 @@ GameInfo::~GameInfo() = default;
 /// <returns>x方向の画面解像度を整数で返す</returns>
 int GameInfo::GetResolutionX()
 {
-  return instance_->x_resolution_;
+  return x_resolution_;
 }
 
 /// <summary>
@@ -51,7 +62,7 @@ int GameInfo::GetResolutionX()
 /// <returns>y方向の画面解像度を整数で返す</returns>
 int GameInfo::GetResolutionY()
 {
-  return instance_->y_resolution_;
+  return y_resolution_;
 }
 
 /// <summary>
@@ -60,7 +71,7 @@ int GameInfo::GetResolutionY()
 /// <returns>中心座標のx成分</returns>
 int GameInfo::GetCenterX()
 {
-  return instance_->x_center_;
+  return x_center_;
 }
 
 /// <summary>
@@ -69,7 +80,7 @@ int GameInfo::GetCenterX()
 /// <returns>中心座標のy成分</returns>
 int GameInfo::GetCenterY()
 {
-  return instance_->y_center_;
+  return y_center_;
 }
 
 /// <summary>
@@ -78,7 +89,7 @@ int GameInfo::GetCenterY()
 /// <returns>カラービット数</returns>
 int GameInfo::GetColorBit()
 {
-  return instance_->color_bit_;
+  return color_bit_;
 }
 
 /// <summary>
@@ -87,7 +98,7 @@ int GameInfo::GetColorBit()
 /// <returns>デバッグ表示するならtrue</returns>
 bool GameInfo::IsDebugDisplay()
 {
-  return instance_->is_debug_display_;
+  return is_debug_display_;
 }
 
 /// <summary>
@@ -96,7 +107,7 @@ bool GameInfo::IsDebugDisplay()
 /// <param name="is_debug">trueを渡したらデバッグモード</param>
 void GameInfo::SetDebugDisplay(bool is_debug)
 {
-  instance_->is_debug_display_ = is_debug;
+  is_debug_display_ = is_debug;
 }
 
 /// <summary>
@@ -105,7 +116,7 @@ void GameInfo::SetDebugDisplay(bool is_debug)
 /// <returns>trueなら終了</returns>
 bool GameInfo::IsEndGame()
 {
-  return instance_->is_end_game_;
+  return is_end_game_;
 }
 
 /// <summary>
@@ -114,5 +125,5 @@ bool GameInfo::IsEndGame()
 /// <param name="is_end_game">設定するゲーム終了フラグ</param>
 void GameInfo::SetEndGame(bool is_end_game)
 {
-  instance_->is_end_game_ = is_end_game;
+  is_end_game_ = is_end_game;
 }
