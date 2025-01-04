@@ -10,7 +10,6 @@
 class GameInfo
 {
 public:
-
 	/// <summary>
 	/// GameInfoのインスタンスを取得する
 	/// （シングルトンデザインパターン）
@@ -41,8 +40,6 @@ public:
 			instance_ = nullptr;
 		}
 	}
-
-public:
 
 	/// <summary>
 	/// 解像度の横幅のサイズを取得
@@ -99,7 +96,6 @@ public:
 	void SetEndGame(bool is_end_game);
 
 private:
-
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>

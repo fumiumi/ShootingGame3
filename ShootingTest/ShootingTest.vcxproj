@@ -121,6 +121,8 @@
     </ClCompile>
     <ClCompile Include="TestMain.cpp" />
     <ClCompile Include="Test_GameInfo.cpp" />
+    <ClCompile Include="Test_Task.cpp" />
+    <ClCompile Include="Test_TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShootingLib\ShootingLib.vcxproj">

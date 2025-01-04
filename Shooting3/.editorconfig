@@ -1,0 +1,6 @@
+# cpp files
+[*.{c++,cc,cpp,cxx,h,h++,hh,hpp,hxx,inl,ipp,tlh,tli}]
+cpp_indent_style = space
+cpp_indent_size = 2
+cpp_space_pointer_reference_alignment = right
+cpp_namespace_indent = none

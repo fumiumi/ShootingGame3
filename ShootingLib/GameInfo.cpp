@@ -5,20 +5,20 @@
 /// </summary>
 namespace
 {
-  /// <summary>
-  /// 解像度横幅
-  /// </summary>
-  int kWidth = 1280;
+/// <summary>
+/// 解像度横幅
+/// </summary>
+int kWidth = 1280;
 
-  /// <summary>
-  /// 解像度縦幅
-  /// </summary>
-  int kHeight = 720;
+/// <summary>
+/// 解像度縦幅
+/// </summary>
+int kHeight = 720;
 
-  /// <summary>
-  /// カラービット数
-  /// </summary>
-  int kColorBit = 32;
+/// <summary>
+/// カラービット数
+/// </summary>
+int kColorBit = 32;
 }
 
 /// <summary>
@@ -31,14 +31,14 @@ std::mutex GameInfo::mutex_;
 /// <summary>
 /// GetInstance()から呼び出すコンストラクタ
 /// </summary>
-GameInfo::GameInfo() :
-  x_resolution_(kWidth),
-  y_resolution_(kHeight),
-  x_center_(kWidth / 2),
-  y_center_(kHeight / 2),
-  color_bit_(kColorBit),
-  is_end_game_(false),
-  is_debug_display_(false)
+GameInfo::GameInfo() 
+  : x_resolution_(kWidth),
+    y_resolution_(kHeight),
+    x_center_(kWidth / 2),
+    y_center_(kHeight / 2),
+    color_bit_(kColorBit),
+    is_end_game_(false),
+    is_debug_display_(false)
 {
 }
 
