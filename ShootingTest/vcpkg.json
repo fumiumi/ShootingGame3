@@ -1,0 +1,11 @@
+{
+  "name": "shooting-project",
+  "version": "2.5.0",
+  "dependencies": [
+    {
+      "name": "gtest",
+      "platform": "windows"
+    }
+  ],
+  "builtin-baseline": "65be7019941e1401e02daaba0738cab2c8a4a355"
+}

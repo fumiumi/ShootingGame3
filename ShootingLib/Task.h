@@ -18,7 +18,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	explicit Task() = default;
+	explicit Task();
 
 	/// <summary>
 	/// デストラクタ
@@ -65,12 +65,12 @@ public:
 	/// 毎フレーム更新処理
 	/// </summary>
 	/// <param name="delta_time">前回実行フレームからの経過時間（秒）</param>
-	virtual void Update(float delta_time) = 0;
+	virtual void Update(float delta_time);
 
 	/// <summary>
 	/// 毎フレームの描画処理
 	/// </summary>
-	virtual void Render() = 0;
+	virtual void Render();
 
 private:
 	/// <summary>

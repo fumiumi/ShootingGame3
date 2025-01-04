@@ -373,3 +373,6 @@ x64/
 # Assets
 
 Assets/
+
+# external libraries
+External/

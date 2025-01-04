@@ -1,3 +1,12 @@
+//------------------------------------------------------------------------------
+// Project Name: [プロジェクト名]
+// File Name: [ファイル名]
+// Description: [ファイルの簡単な説明]
+// Author: [開発者名またはチーム名]
+// Copyright [年] [著作者名または組織名]
+// Created Date: [作成日]
+// Last Updated: [最終更新日]
+//------------------------------------------------------------------------------
 #pragma once
 
 #include <vector>
@@ -91,8 +100,6 @@ private:
 	/// </summary>
 	static const TaskId kStartTaskId;
 
-private:
-
 	/// <summary>
 	/// TaskManagerのインスタンス
 	/// </summary>
@@ -105,11 +112,14 @@ private:
 
 	/// <summary>
 	/// 追加タスクリスト
+  /// Update中のリソースの確保・解放を防ぐ役割
 	/// </summary>
 	std::vector<Task *> add_task_list_;
 
 	/// <summary>
 	/// 解放タスクリスト
+  /// 開放すべきタスクがわかれば良いのでIDだけを保持
+	/// Update中のリソースの確保・解放を防ぐ役割
 	/// </summary>
 	std::vector<TaskId> release_task_list_;
 

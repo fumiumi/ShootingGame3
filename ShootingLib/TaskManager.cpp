@@ -13,10 +13,10 @@ const TaskId TaskManager::kStartTaskId = 100;
 /// コンストラクタ
 /// </summary>
 TaskManager::TaskManager()
-  : task_list_()
-    ,add_task_list_()
-    ,release_task_list_()
-    ,last_assigned_task_id_(0)
+  : task_list_(),
+  add_task_list_(),
+  release_task_list_(),
+  last_assigned_task_id_(0)
 {
 }
 
@@ -31,12 +31,13 @@ TaskManager::~TaskManager()
 /// タスクを追加する
 /// </summary>
 /// <param name="task">追加するタスク</param>
-/// <returns>発行したTaskId</returns>
+/// <returns>発行したTaskId, 失敗したら-1</returns>
 TaskId TaskManager::AddTask(Task *task)
 {
   //追加するタスクがnullptrなら失敗
   if (task == nullptr)
   {
+    //失敗を示すIDを返す
     return -1;
   }
 
@@ -51,10 +52,13 @@ TaskId TaskManager::AddTask(Task *task)
   TaskId assign_id = last_assigned_task_id_ + 1;
 
   //前回割り振ったIDを更新
+  last_assigned_task_id_++;
 
   //タスクにIDを設定
+  task->SetTaskId(assign_id);
 
   //追加リストに加える
+  add_task_list_.emplace_back(task);
 
   //発行したTaskIdを返す
   return assign_id;
@@ -86,9 +90,13 @@ Task *TaskManager::ReleaseTask(TaskId task_id)
   }
 
   //タスクに解放フラグを設定する
+  //開放自体はUpdateTaskで行う
+  find_task->SetRelease();
 
   //削除リストに追加
+  release_task_list_.emplace_back(find_task->GetTaskId());
 
+  //Q: なぜSetRelease()したのにfind_taskを返すのか？
   return find_task;
 }
 
@@ -98,20 +106,46 @@ Task *TaskManager::ReleaseTask(TaskId task_id)
 /// <param name="delta_time">最後のフレームを完了するのに要した時間 (秒) </param>
 void TaskManager::UpdateTask(float delta_time)
 {
-  //タスクの毎フレーム更新処理
+  //リスト内のタスクの毎フレーム更新処理
   for (std::vector<Task *>::iterator it = task_list_.begin(); it != task_list_.end(); ++it)
   {
     //解放フラグが立っているなら実行しない
+    if ((*it)->IsRelease())
+    {
+      continue;
+    }
 
     //タスクの更新
+    (*it)->Update(delta_time);
   }
 
   //追加タスクリストにあるタスクを追加
+  for (std::vector<Task *>::iterator it = add_task_list_.begin(); it != add_task_list_.end(); ++it)
+  {
+    //タスクリストに追加
+    task_list_.emplace_back((*it));
+  }
 
   //追加タスクリストをクリア
   add_task_list_.clear();
 
   //解放タスクリストにあるタスクIDのタスクを解放
+  for (std::vector<TaskId>::iterator it = release_task_list_.begin(); it != release_task_list_.end(); ++it)
+  {
+    //タスクを見つける
+    for (std::vector<Task *>::iterator it_task = task_list_.begin(); it_task != task_list_.end(); ++it_task)
+    {
+      //該当IDのタスクを発見した
+      if ((*it) == (*it_task)->GetTaskId())
+      {
+        //メモリ解放
+        //先に開放しないとイテレータが無効になって未定義動作になる可能性がある
+        delete (*it_task);
+        //タスクを削除
+        task_list_.erase(it_task);
+      }
+    }
+  }
 
   //解放タスクリストをクリア
   release_task_list_.clear();
@@ -126,7 +160,13 @@ void TaskManager::RenderTask()
   for (std::vector<Task *>::iterator it = task_list_.begin(); it != task_list_.end(); ++it)
   {
     //解放フラグが立っているなら実行しない
+    if ((*it)->IsRelease())
+    {
+      continue;
+    }
 
     //タスクの描画
+    //※描画順は登録順
+    (*it)->Render();
   }
 }

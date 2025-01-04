@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "gtest/gtest.h"
 
+// なぜかgmockが入っていないので使わない方針で
+//#include "gmock/gmock.h"
+
 #include "TaskManager.h"
+#include "Task.h"
 
 /*
 * TaskManagerクラスのテスト
@@ -19,14 +23,14 @@ protected:
   TaskManager *task_manager = nullptr;
 
   void SetUp() override {
-    task_manager = &TaskManager::GetInstance();
+    task_manager = TaskManager::GetInstance();
   }
 
   void TearDown() override {
     // シングルトンの場合、通常はインスタンスを削除しません
+    TaskManager::Destroy();
     task_manager = nullptr;
   }
 };
 
-// テストケース
 
