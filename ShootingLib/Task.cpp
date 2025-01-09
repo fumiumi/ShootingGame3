@@ -9,7 +9,7 @@ Task::Task()
 {
 }
 
-//抽象クラスのため、デストラクタは純粋仮想関数
+Task::~Task() = default;
 
 /// <summary>
 /// タスクIDを設定

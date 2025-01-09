@@ -24,7 +24,7 @@ public:
 	/// デストラクタ
 	/// 純粋仮想関数
 	/// </summary>
-	virtual ~Task() = 0;
+	virtual ~Task();
 
   /// <summary>
   /// ムーブコンストラクタ

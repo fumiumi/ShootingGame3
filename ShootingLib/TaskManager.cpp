@@ -138,11 +138,10 @@ void TaskManager::UpdateTask(float delta_time)
       //該当IDのタスクを発見した
       if ((*it) == (*it_task)->GetTaskId())
       {
-        //メモリ解放
-        //先に開放しないとイテレータが無効になって未定義動作になる可能性がある
-        delete (*it_task);
         //タスクを削除
         task_list_.erase(it_task);
+        //タスクの解放はTaskManagerの責務ではないのでdeleteしない
+        break;
       }
     }
   }

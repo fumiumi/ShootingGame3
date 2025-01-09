@@ -1,6 +1,8 @@
 #include <DxLib.h>
 #include <crtdbg.h>
 #include <GameInfo.h>
+#include <TaskManager.h>
+#include "LevelChanger.h"
 
 //メモリリーク検出のために必要
 #if defined(_WIN64) || defined(_WIN32)
@@ -56,12 +58,40 @@ namespace
 /// <summary>
 /// フレームレート計算用
 /// </summary>
-void CalcFrameRate();
+void CalcFrameRate()
+{
+	//前回のフレームレート更新からの経過時間を求める
+	int diff_time = current_time_millisecond - last_update_frame_rate_time_millisecond;
+
+	//前回のフレームレート更新から
+	//1秒以上経過していたらフレームレートを更新する
+	if (diff_time > kOneMillisecond)
+	{
+		//フレーム回数をミリ秒に合わせる
+		//少数まで出したいのでfloatにキャスト
+		float count = static_cast<float>(frame_count * kOneMillisecond);
+
+		//フレームレートを求める
+		//理想どうりなら 60000 / 1000 で 60 となる
+		frame_rate = count / diff_time;
+
+		//フレームカウントをクリア
+		frame_count = 0;
+
+		//フレームレート更新時間を更新
+		last_update_frame_rate_time_millisecond = current_time_millisecond;
+	}
+}
 
 /// <summary>
 /// フレームレート描画用
 /// </summary>
-void DrawFrameRate();
+void DrawFrameRate()
+{
+	//フレームレートの描画
+	//（必要に応じて定数化してください）
+	DrawFormatString(0, 0, GetColor(255, 30, 30), _T("FPS[%.2f]"), frame_rate);
+}
 
 /// <summary>
 /// プログラムは WinMain から始まります
@@ -90,18 +120,31 @@ int WINAPI WinMain(
 	//SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 
 	//ウィンドウモードに設定
+  // これをフルスクリーンにするとデバッグ画面が見えなくなるので注意
 	ChangeWindowMode(TRUE);
 
+  //ゲーム情報オブジェクトの初期化
   GameInfo *game_info = GameInfo::GetInstance();
 
+  //タスクマネージャーのインスタンスを取得
+  TaskManager *task_manager = TaskManager::GetInstance();
+	
+  //レベルチェンジャーのインスタンスを取得
+  LevelChanger *level_changer = LevelChanger::GetInstance();
+
+  //タスクマネージャーにレベルチェンジャーを追加
+  task_manager->AddTask(level_changer);
+
+  //初期レベルを設定(タイトルレベル
+  //Update関数でレベルオブジェクトを生成する
+  level_changer->SetLevelChangerState(LevelChanger::LevelChangerState::kInitTitleLevel);
+
 	//ウィンドウサイズとカラービットを設定
-	//（値は後ほど定数化します）
   SetGraphMode(game_info->GetResolutionX(), game_info->GetResolutionY(), game_info->GetColorBit());
 
 	//DXライブラリの初期化
 	if (DxLib_Init() == -1)
 	{
-
 		//初期化失敗は強制終了
 		return -1;
 	}
@@ -140,10 +183,12 @@ int WINAPI WinMain(
 			//ウィンドウがアクティブなら実行する処理
 			if (GetWindowActiveFlag() == TRUE)
 			{
-				//Update関連を呼ぶ
+				task_manager->UpdateTask(delta_time);
 			}
 
 			//描画関連を呼ぶ
+			task_manager->RenderTask();
+
 
 			//フレームレートの計算
 			CalcFrameRate();
@@ -161,47 +206,12 @@ int WINAPI WinMain(
 	}
 
   //メモリの開放
-	GameInfo::Destroy();
+	game_info->Destroy();
+  level_changer->ForceDestroyCurrentLevel();
+	level_changer->Destory();
+  task_manager->Destroy();
+
 	DxLib_End();
 
 	return 0;
-}
-
-/// <summary>
-/// フレームレート計算用
-/// </summary>
-void CalcFrameRate()
-{
-	//前回のフレームレート更新からの経過時間を求める
-	int diff_time = current_time_millisecond - last_update_frame_rate_time_millisecond;
-
-	//前回のフレームレート更新から
-	//1秒以上経過していたらフレームレートを更新する
-	if (diff_time > kOneMillisecond)
-	{
-		//フレーム回数をミリ秒に合わせる
-		//少数まで出したいのでfloatにキャスト
-		float count = (float)(frame_count * kOneMillisecond);
-
-		//フレームレートを求める
-		//理想どうりなら 60000 / 1000 で 60 となる
-		frame_rate = count / diff_time;
-
-		//フレームカウントをクリア
-		frame_count = 0;
-
-		//フレームレート更新時間を更新
-		last_update_frame_rate_time_millisecond = current_time_millisecond;
-	}
-
-}
-
-/// <summary>
-/// フレームレート描画用
-/// </summary>
-void DrawFrameRate()
-{
-	//フレームレートの描画
-	//（必要に応じて定数化してください）
-	DrawFormatString(0, 0, GetColor(255, 30, 30), _T("FPS[%.2f]"), frame_rate);
 }
