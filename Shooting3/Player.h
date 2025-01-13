@@ -1,5 +1,4 @@
 #pragma once
-#include <array>
 #include "Task.h"
 
 class Player : public Task
@@ -24,7 +23,7 @@ public:
     /// </summary>
     kRightBank = 2,
     /// <summary>
-    /// LoadDivGraphに失敗したときのエラー
+    /// LoadやDrawが失敗したとき
     /// </summary>
     kError = 3,
   };
@@ -38,32 +37,27 @@ public:
   /// </summary>
   ~Player();
 
+ /// <summary>
+ /// 自機の座標を設定
+ /// </summary>
+ /// <param name="x">x座標</param>
+ /// <param name="y">y座標</param>
+  void SetPosition(int x, int y);
+
+  int GetPositionX() const;
+  int GetPositionY() const;
+
+
   /// <summary>
   /// 毎フレーム実行する処理
   /// </summary>
   /// <param name="delta_time"></param>
   void Update(float delta_time) override;
 
-  // TODO: スプライトアニメーションの実装
   /// <summary>
   /// 毎フレームの描画処理
   /// </summary>
   void Render() override;
-
-  /// <summary>
-  /// 自機の座標を設定
-  /// </summary>
-  /// <param name="x">x座標</param>
-  /// <param name="y">y座標</param>
-  void SetPosition(int x, int y);
-
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <returns></returns>
-  int GetPositionX() const;
-
-  int GetPositionY() const;
 
   /// <summary>
   /// 自機画像の読み込み
@@ -75,14 +69,12 @@ public:
   /// </summary>
   void RemovePlayerImage();
 
+
+private:
   /// <summary>
   /// スプライト用画像の分割数
   /// </summary>
-  static const int kPlayerImageDivNum = 4;
-
-private:
-  // TODO: スプライトアニメーションの実装
-  // TODO: プレイヤーの移動処理
+  static constexpr int kPlayerImageDivNum = 4;
 
   //TIPS: 3Dゲーム空間の座標系は左手系が一般的
   /// <summary>

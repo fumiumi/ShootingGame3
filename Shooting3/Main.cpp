@@ -3,6 +3,7 @@
 #include <GameInfo.h>
 #include <TaskManager.h>
 #include "LevelChanger.h"
+#include "Player.h"
 
 //メモリリーク検出のために必要
 #if defined(_WIN64) || defined(_WIN32)
@@ -123,25 +124,6 @@ int WINAPI WinMain(
   // これをフルスクリーンにするとデバッグ画面が見えなくなるので注意
 	ChangeWindowMode(TRUE);
 
-  //ゲーム情報オブジェクトの初期化
-  GameInfo *game_info = GameInfo::GetInstance();
-
-  //タスクマネージャーのインスタンスを取得
-  TaskManager *task_manager = TaskManager::GetInstance();
-	
-  //レベルチェンジャーのインスタンスを取得
-  LevelChanger *level_changer = LevelChanger::GetInstance();
-
-  //タスクマネージャーにレベルチェンジャーを追加
-  task_manager->AddTask(level_changer);
-
-  //初期レベルを設定(タイトルレベル
-  //Update関数でレベルオブジェクトを生成する
-  level_changer->SetLevelChangerState(LevelChanger::LevelChangerState::kInitTitleLevel);
-
-	//ウィンドウサイズとカラービットを設定
-  SetGraphMode(game_info->GetResolutionX(), game_info->GetResolutionY(), game_info->GetColorBit());
-
 	//DXライブラリの初期化
 	if (DxLib_Init() == -1)
 	{
@@ -154,6 +136,28 @@ int WINAPI WinMain(
 
 	//ウィンドウが非アクティブになってもゲームは止めないようにする
 	SetAlwaysRunFlag(true);
+
+  //HACK: シングルトンが多すぎる。
+  //ゲーム情報オブジェクトの初期化
+  GameInfo *game_info = GameInfo::GetInstance();
+  //タスクマネージャーのインスタンスを取得
+  TaskManager *task_manager = TaskManager::GetInstance();
+  //レベルチェンジャーのインスタンスを取得
+  LevelChanger *level_changer = LevelChanger::GetInstance();
+
+  //タスクマネージャーにタスクを追加
+  task_manager->AddTask(level_changer);
+  task_manager->AddTask(new Player());
+
+  //初期レベルを設定
+  level_changer->SetLevelChangerState(LevelChanger::LevelChangerState::kInitTitleLevel);
+
+	//ウィンドウサイズとカラービットを設定
+	SetGraphMode(
+		game_info->GetResolutionX(), 
+		game_info->GetResolutionY(), 
+		game_info->GetColorBit()
+	);
 
 	//ゲームメインループ
 	while (ProcessMessage() != -1)

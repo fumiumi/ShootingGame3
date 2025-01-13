@@ -5,54 +5,71 @@ namespace
 {
 /// <summary>
 /// プレイヤー画像のファイルパス
-/// サイズ：120x120（60x60 x 4枚）
-/// 左上：デフォルト'
+/// 左上：デフォルト
 /// 右上：左矢印入力時
 /// 左下：右矢印入力時
 /// 右下：空白
 /// </summary>
-const char *kPlayerImageFilePath = "E:ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Player/Player.png";
-
+const char *kPlayerImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Player/Player.png";
 /// <summary>
 /// x方向の分割数
 /// </summary>
 const int kPlayerImageDivX = 2;
-
 /// <summary>
 /// y方向の分割数
 /// </summary>
 const int kPlayerImageDivY = 2;
-
 /// <summary>
-/// 分割画像の横幅
+/// 分割した画像の幅
 /// </summary>
-const int kPlayerImageDivSizeX = 60;
-
+const int kPlayerImageDivSizeX = 64;
 /// <summary>
-/// 分割画像の縦幅
+/// 分割した画像の高さ
 /// </summary>
-const int kPlayerImageDivSizeY = 60;
+const int kPlayerImageDivSizeY = 64;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Player::Player()
   : Task(),
-  positionX_(0),
-  positionY_(0),
-  playerState_(PlayerState::kStraight)
+    positionX_(0),
+    positionY_(0),
+    playerState_(PlayerState::kStraight)
 {
   // 画像の読み込み
+  //CAUTION: DxLib_Init()が呼ばれていることが前提
  LoadPlayerImage();
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Player::~Player()
 {
   // 画像の解放
   RemovePlayerImage();
 }
 
+void Player::SetPosition(int x, int y)
+{
+  positionX_ = x;
+  positionY_ = y;
+}
+
+int Player::GetPositionX() const
+{
+  return positionX_;
+}
+
+int Player::GetPositionY() const
+{
+  return positionY_;
+}
+
 void Player::Update(float delta_time)
 {
-  // 表示するplayerImageDivArrayを決定
   if (playerState_ == PlayerState::kError)
   {
     return;
@@ -60,58 +77,39 @@ void Player::Update(float delta_time)
 
   // 仮実装
   playerState_ = PlayerState::kStraight;
-
 }
 
 void Player::Render()
 {
+  //状態をハンドル指定に変換
+  int drawHandleNum_ = static_cast<int>(playerState_);
+
+  if (drawHandleNum_ < 0 || drawHandleNum_ >= kPlayerImageDivNum)
+  {
+    printfDx("無効なハンドル番号です: %d", drawHandleNum_);
+    playerState_ = PlayerState::kError;
+    return;
+  }
+
   // 画像の描画
-  DrawGraph(
+  int result = DrawGraph(
     positionX_, 
     positionY_, 
-    playerImageHandleArray_[static_cast<int>(playerState_)], 
+    playerImageHandleArray_[drawHandleNum_],
     TRUE
   );
+
+  if (result == -1)
+  {
+    // エラーログを出力
+    printfDx("画像の出力に失敗しました");
+    playerState_ = PlayerState::kError;
+  }
 }
 
-/// <summary>
-/// 自機の座標を設定
-/// </summary>
-/// <param name="x">x座標</param>
-/// <param name="y">y座標</param>
-void Player::SetPosition(int x, int y)
-{
-  positionX_ = x;
-  positionY_ = y;
-}
-
-/// <summary>
-/// x座標を取得
-/// </summary>
-/// <returns>x座標</returns>
-int Player::GetPositionX() const
-{
-  return positionX_;
-}
-
-/// <summary>
-/// y座標を取得
-/// </summary>
-/// <returns>y座標</returns>
-int Player::GetPositionY() const
-{
-  return positionY_;
-}
 
 void Player::LoadPlayerImage()
 {
-  // LoadDivGraph関数
-  // FileName:分割読み込みする画像ファイル文字列のポインタ
-  // AllNum:画像の分割総数
-  // XNum, YNum:画像の横向きに対する分割数と縦に対する分割数
-  // SizeX, SizeY:分割された画像一つの大きさ
-  // HandleBuf:分割読み込みして得たグラフィックハンドルを
-  // 保存するint型の配列へのポインタ
   int result = LoadDivGraph(
     kPlayerImageFilePath,
     kPlayerImageDivNum, // ヘッダでstatic宣言している
@@ -122,9 +120,9 @@ void Player::LoadPlayerImage()
     playerImageHandleArray_ // 配列の先頭アドレスを渡す
   );
 
+  // 画像の読み込みに失敗
   if (result == -1)
   {
-    // 画像の読み込みに失敗
     // エラーログを出力
     printfDx("画像の読み込みに失敗しました");
     playerState_ = PlayerState::kError;
@@ -133,10 +131,8 @@ void Player::LoadPlayerImage()
 
 void Player::RemovePlayerImage()
 {
-  for (int image : playerImageHandleArray_)
+  for (int handle : playerImageHandleArray_)
   {
-    DeleteGraph(image);
+    DeleteGraph(handle);
   }
 }
-
-
