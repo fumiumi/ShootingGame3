@@ -6,6 +6,30 @@ class Player : public Task
 {
 public:
   /// <summary>
+  /// プレイヤーの移動向き
+  /// 描画するスプライト画像を変更するために使用
+  /// </summary>
+  enum class PlayerState
+  {
+    /// <summary>
+    /// 正面向き
+    /// </summary>
+    kStraight = 0,
+    /// <summary>
+    /// 左バンク
+    /// </summary>
+    kLeftBank = 1,
+    /// <summary>
+    /// 右バンク
+    /// </summary>
+    kRightBank = 2,
+    /// <summary>
+    /// LoadDivGraphに失敗したときのエラー
+    /// </summary>
+    kError = 3,
+  };
+
+  /// <summary>
   /// コンストラクタ
   /// </summary>
   Player();
@@ -72,11 +96,14 @@ private:
   int positionY_;
 
   /// <summary>
+  /// .自機の描画状態
+  /// </summary>
+  PlayerState playerState_;
+
+  /// <summary>
   /// 自機画像
   /// Dxライブラリで画像を管理するためのハンドル
   /// </summary>
-  int playerImageHandle_;
-
-  int playerImageDivArray_[kPlayerImageDivNum];
+  int playerImageHandleArray_[kPlayerImageDivNum];
 };
 

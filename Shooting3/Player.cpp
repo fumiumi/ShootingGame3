@@ -6,7 +6,7 @@ namespace
 /// <summary>
 /// プレイヤー画像のファイルパス
 /// サイズ：120x120（60x60 x 4枚）
-/// 左上：デフォルト
+/// 左上：デフォルト'
 /// 右上：左矢印入力時
 /// 左下：右矢印入力時
 /// 右下：空白
@@ -38,7 +38,7 @@ Player::Player()
   : Task(),
   positionX_(0),
   positionY_(0),
-  playerImageHandle_(0)
+  playerState_(PlayerState::kStraight)
 {
   // 画像の読み込み
  LoadPlayerImage();
@@ -52,12 +52,26 @@ Player::~Player()
 
 void Player::Update(float delta_time)
 {
+  // 表示するplayerImageDivArrayを決定
+  if (playerState_ == PlayerState::kError)
+  {
+    return;
+  }
+
+  // 仮実装
+  playerState_ = PlayerState::kStraight;
+
 }
 
 void Player::Render()
 {
   // 画像の描画
-  DrawGraph(positionX_, positionY_, playerImageHandle_, TRUE);
+  DrawGraph(
+    positionX_, 
+    positionY_, 
+    playerImageHandleArray_[static_cast<int>(playerState_)], 
+    TRUE
+  );
 }
 
 /// <summary>
@@ -98,20 +112,31 @@ void Player::LoadPlayerImage()
   // SizeX, SizeY:分割された画像一つの大きさ
   // HandleBuf:分割読み込みして得たグラフィックハンドルを
   // 保存するint型の配列へのポインタ
-  playerImageHandle_ = LoadDivGraph(
+  int result = LoadDivGraph(
     kPlayerImageFilePath,
     kPlayerImageDivNum, // ヘッダでstatic宣言している
     kPlayerImageDivX,
     kPlayerImageDivY,
     kPlayerImageDivSizeX,
     kPlayerImageDivSizeY,
-    playerImageDivArray_ // 配列の先頭アドレスを渡す
+    playerImageHandleArray_ // 配列の先頭アドレスを渡す
   );
+
+  if (result == -1)
+  {
+    // 画像の読み込みに失敗
+    // エラーログを出力
+    printfDx("画像の読み込みに失敗しました");
+    playerState_ = PlayerState::kError;
+  }
 }
 
 void Player::RemovePlayerImage()
 {
-  DeleteGraph(playerImageHandle_);
+  for (int image : playerImageHandleArray_)
+  {
+    DeleteGraph(image);
+  }
 }
 
 
