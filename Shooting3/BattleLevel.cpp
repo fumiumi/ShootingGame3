@@ -81,6 +81,7 @@ void BattleLevel::Render()
   //GrHandle　 : 描画するグラフィックのハンドル
   //TransFlag　 : 画像の透明度を有効にするかどうか(TRUE：有効にする　FALSE：無効にする)
   DrawGraph(kBgPosX, kBgPosY, battle_bg_handle_, TRUE);
+  //printfDx("handle is %d\n", battle_bg_handle_);
 }
 
 /// <summary>

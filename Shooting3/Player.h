@@ -90,12 +90,12 @@ private:
   /// <summary>
   /// .自機の描画状態
   /// </summary>
-  PlayerState playerState_;
+  PlayerState player_state_;
 
   /// <summary>
   /// 自機画像
   /// Dxライブラリで画像を管理するためのハンドル
   /// </summary>
-  int playerImageHandleArray_[kPlayerImageDivNum];
+  int player_handle_array_[kPlayerImageDivNum];
 };
 

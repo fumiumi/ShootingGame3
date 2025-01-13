@@ -1,4 +1,4 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include "Player.h"
 
 namespace
@@ -11,6 +11,7 @@ namespace
 /// 右下：空白
 /// </summary>
 const char *kPlayerImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Player/Player.png";
+
 /// <summary>
 /// x方向の分割数
 /// </summary>
@@ -34,13 +35,11 @@ const int kPlayerImageDivSizeY = 64;
 /// </summary>
 Player::Player()
   : Task(),
-    positionX_(0),
-    positionY_(0),
-    playerState_(PlayerState::kStraight)
+  positionX_(640), // 数式はわかりやすいけど、マジックナンバーはやめたい
+  positionY_(360), // 数式はわかりやすいけど、マジックナンバーはやめたい
+  player_state_(PlayerState::kStraight),
+  player_handle_array_{0, 0, 0, 0}
 {
-  // 画像の読み込み
-  //CAUTION: DxLib_Init()が呼ばれていることが前提
- LoadPlayerImage();
 }
 
 /// <summary>
@@ -70,40 +69,43 @@ int Player::GetPositionY() const
 
 void Player::Update(float delta_time)
 {
-  if (playerState_ == PlayerState::kError)
+  if (player_state_ == PlayerState::kError)
   {
-    return;
+    //TODO: エラー時の処理を考える
   }
 
   // 仮実装
-  playerState_ = PlayerState::kStraight;
+  // 画像の読み込み
+  //CAUTION: DxLib_Init()が呼ばれていることが前提
+  LoadPlayerImage();
+  player_state_ = PlayerState::kStraight;
 }
 
 void Player::Render()
 {
   //状態をハンドル指定に変換
-  int drawHandleNum_ = static_cast<int>(playerState_);
+  int drawHandleNum = static_cast<int>(player_state_);
 
-  if (drawHandleNum_ < 0 || drawHandleNum_ >= kPlayerImageDivNum)
+  //DEBUG: ハンドルの中身を確認
+  for (int i = 0; i < kPlayerImageDivNum; i++)
   {
-    printfDx("無効なハンドル番号です: %d", drawHandleNum_);
-    playerState_ = PlayerState::kError;
-    return;
+    printfDx("handle[%d] is %d\n", i, player_handle_array_[i]);
   }
 
   // 画像の描画
   int result = DrawGraph(
-    positionX_, 
-    positionY_, 
-    playerImageHandleArray_[drawHandleNum_],
-    TRUE
+    positionX_,
+    positionY_,
+    player_handle_array_[drawHandleNum],
+    FALSE
   );
 
   if (result == -1)
   {
     // エラーログを出力
-    printfDx("画像の出力に失敗しました");
-    playerState_ = PlayerState::kError;
+    printfDx("画像の出力に失敗しました\n");
+    //TODO: とりあえずkErrorにしておくけど、その後の処理はまだ未定
+    player_state_ = PlayerState::kError;
   }
 }
 
@@ -117,21 +119,24 @@ void Player::LoadPlayerImage()
     kPlayerImageDivY,
     kPlayerImageDivSizeX,
     kPlayerImageDivSizeY,
-    playerImageHandleArray_ // 配列の先頭アドレスを渡す
+    player_handle_array_ // 配列の先頭アドレスを渡す
   );
+
+  //handle_ = LoadGraph(kPlayerImageFilePath);
 
   // 画像の読み込みに失敗
   if (result == -1)
   {
     // エラーログを出力
-    printfDx("画像の読み込みに失敗しました");
-    playerState_ = PlayerState::kError;
+    printfDx("画像の読み込みに失敗しました\n");
+    //TODO: とりあえずkErrorにしておくけど、その後の処理はまだ未定
+    player_state_ = PlayerState::kError;
   }
 }
 
 void Player::RemovePlayerImage()
 {
-  for (int handle : playerImageHandleArray_)
+  for (int handle : player_handle_array_)
   {
     DeleteGraph(handle);
   }
