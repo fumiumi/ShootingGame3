@@ -35,8 +35,8 @@ const int kPlayerImageDivSizeY = 64;
 /// </summary>
 Player::Player()
   : Task(),
-  positionX_(640), // 数式はわかりやすいけど、マジックナンバーはやめたい
-  positionY_(360), // 数式はわかりやすいけど、マジックナンバーはやめたい
+  positionX_(640), // マジックナンバーはやめたい
+  positionY_(360), // 数マジックナンバーはやめたい
   player_state_(PlayerState::kStraight),
   player_handle_array_{0, 0, 0, 0}
 {
@@ -97,7 +97,7 @@ void Player::Render()
     positionX_,
     positionY_,
     player_handle_array_[drawHandleNum],
-    FALSE
+    TRUE
   );
 
   if (result == -1)

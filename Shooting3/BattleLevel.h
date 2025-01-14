@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LevelBase.h"
+#include "Player.h"
 
 class BattleLevel : public LevelBase
 {
@@ -71,6 +72,8 @@ private:
   /// ”wŒi‰æ‘œ
   /// </summary>
   int battle_bg_handle_;
+
+  Player *player_;
 
   /// <summary>
   /// Œ»İ‚ÌŒo‰ßŠÔ

@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "LevelChanger.h"
 #include "BattleLevel.h"
+#include "TaskManager.h"
 
 /// <summary>
 /// TitleLevel.cppのみで使用する定数
@@ -36,6 +37,7 @@ const float kChangeTitleTime = 3.0f;
 BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
     battle_bg_handle_(0),
+    player_(nullptr),
     elapsed_time_(0.0f)
 {
 }
@@ -92,6 +94,12 @@ void BattleLevel::BeginLevel()
   // 背景画像の読み込み
   battle_bg_handle_ = LoadGraph(kBattleBgImageFilePath);
 
+  // プレイヤーの生成
+  player_ = new Player();
+
+  //タスクマネージャーに放り込む
+  TaskManager::GetInstance()->AddTask(player_);
+
   // バトルレベルの状態をプレイに設定
   battle_level_state_ = BattleLevelState::kPlay;
   //=> Updateが動くようになる
@@ -99,11 +107,14 @@ void BattleLevel::BeginLevel()
 
 void BattleLevel::ReleaseLevel()
 {
-  // 今はタスクマネージャーに登録しているものはない
+  // プレイヤーの解放
+  TaskManager::GetInstance()->ReleaseTask(player_->GetTaskId());
 }
 
 void BattleLevel::DestroyLevel()
 {
   // 背景画像の破棄
   DeleteGraph(battle_bg_handle_);
+  delete player_;
+  player_ = nullptr;
 }

@@ -147,7 +147,6 @@ int WINAPI WinMain(
 
   //タスクマネージャーにタスクを追加
   task_manager->AddTask(level_changer);
-  task_manager->AddTask(new Player());
 
   //初期レベルを設定
   level_changer->SetLevelChangerState(LevelChanger::LevelChangerState::kInitTitleLevel);

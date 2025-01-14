@@ -156,7 +156,7 @@ void TaskManager::UpdateTask(float delta_time)
 void TaskManager::RenderTask()
 {
   //タスクの毎フレーム描画処理
-  for (auto it = task_list_.rbegin(); it != task_list_.rend(); ++it)
+  for (auto it = task_list_.begin(); it != task_list_.end(); ++it)
   {
     //解放フラグが立っているなら実行しない
     if ((*it)->IsRelease())
