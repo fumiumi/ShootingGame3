@@ -4,15 +4,13 @@
 #include <TaskManager.h>
 #include "LevelChanger.h"
 #include "Player.h"
+#include "inputManager.h"
 
 //メモリリーク検出のために必要
 #if defined(_WIN64) || defined(_WIN32)
 #include <windows.h>
 #endif
 
-/// <summary>
-/// メイン処理用の無名名前空間(内部リンケージ)
-/// </summary>
 namespace
 {
 	/// <summary>
@@ -56,9 +54,6 @@ namespace
 	float frame_rate = 0.0f;
 }
 
-/// <summary>
-/// フレームレート計算用
-/// </summary>
 void CalcFrameRate()
 {
 	//前回のフレームレート更新からの経過時間を求める
@@ -84,9 +79,6 @@ void CalcFrameRate()
 	}
 }
 
-/// <summary>
-/// フレームレート描画用
-/// </summary>
 void DrawFrameRate()
 {
 	//フレームレートの描画
@@ -116,10 +108,6 @@ int WINAPI WinMain(
 	//ログファイルは出力しない設定にする
 	SetOutApplicationLogValidFlag(FALSE);
 
-	//DXライブラリの文字コード設定
-	// プロジェクトのエンコード方式がもうshift-jisのためこれはやめる
-	//SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
-
 	//ウィンドウモードに設定
   // これをフルスクリーンにするとデバッグ画面が見えなくなるので注意
 	ChangeWindowMode(TRUE);
@@ -144,6 +132,9 @@ int WINAPI WinMain(
   TaskManager *task_manager = TaskManager::GetInstance();
   //レベルチェンジャーのインスタンスを取得
   LevelChanger *level_changer = LevelChanger::GetInstance();
+  //入力マネージャのインスタンスを取得
+  InputManager *input_manager = InputManager::GetInstance();
+	
 
   //タスクマネージャーにタスクを追加
   task_manager->AddTask(level_changer);
@@ -186,7 +177,9 @@ int WINAPI WinMain(
 			//ウィンドウがアクティブなら実行する処理
 			if (GetWindowActiveFlag() == TRUE)
 			{
+        input_manager->UpdateKeyStateAll(delta_time);
 				task_manager->UpdateTask(delta_time);
+        input_manager->RecordKeyStateAll(delta_time);
 			}
 
 			//描画関連を呼ぶ
@@ -213,6 +206,7 @@ int WINAPI WinMain(
   level_changer->ForceDestroyCurrentLevel();
 	level_changer->Destory();
   task_manager->Destroy();
+  //input_managerは自動で破棄される
 
 	DxLib_End();
 

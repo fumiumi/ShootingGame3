@@ -57,19 +57,15 @@ public:
 		kNum,
 	};
 
-	/// <summary>
-	/// InputManagerのインスタンスを取得する
-	/// </summary>
-	/// <returns></returns>
-	static InputManager &GetInstance() {
-		static InputManager instance;  // オブジェクトを直接生成
-		return instance;
-	}
+	static InputManager *GetInstance()
+  {
+    //生成されていないなら生成
+    if (instance_ == nullptr) {
+      instance_ = new InputManager();
+    }
+    return instance_;
+  }
 
-	/// <summary>
-	/// InputManagerのインスタンスを削除
-	/// ゲーム終了時に必ず呼ぶ
-	/// </summary>
 	static void Destory()
 	{
 		////生成済みなら削除
@@ -97,7 +93,7 @@ public:
 	/// </summary>
 	/// <param name="key_kind">調べるキー</param>
 	/// <returns>押されているならtrue</returns>
-	bool IsPushThisFlame(GameKeyKind game_key_kind);
+	bool IsPushThisFrame(GameKeyKind game_key_kind);
 
 	/// <summary>
 	/// 引数のキーは押されているか
@@ -108,25 +104,15 @@ public:
 
 
 private:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
 	InputManager();
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
 	virtual ~InputManager() = default;
+
+	static InputManager *instance_;
 
 	/// <summary>
 	/// キー状態を格納するバッファのサイズ
 	/// </summary>
 	static const int kKeyBufferSize = 256;
-
-	///// <summary>
-	///// InputManagerのインスタンス
-	///// </summary>
-	//static InputManager *instance_;
 
 	/// <summary>
 	/// 現在のフレームのキー情報

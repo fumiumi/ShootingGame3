@@ -3,25 +3,15 @@
 #include "BattleLevel.h"
 #include "TaskManager.h"
 
-/// <summary>
-/// TitleLevel.cppのみで使用する定数
-/// </summary>
 namespace
 {
 /// <summary>
-/// 背景画像
 /// DXライブラリに渡すので、const char*型を使用（互換性の問題）
 /// </summary>
 const char *kBattleBgImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Background/BaseBgSky01.png";
 
-/// <summary>
-/// ウィンドウ内における、背景画像のX座標
-/// </summary>
 const int kBgPosX = 200;
 
-/// <summary>
-/// ウィンドウ内における、背景画像のY座標
-/// </summary>
 const int kBgPosY = 0;
 
 /// <summary>
@@ -31,9 +21,6 @@ const int kBgPosY = 0;
 const float kChangeTitleTime = 3.0f;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
 BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
     battle_bg_handle_(0),
@@ -42,9 +29,6 @@ BattleLevel::BattleLevel()
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
 BattleLevel::~BattleLevel() = default;
 
 void BattleLevel::Update(float delta_time)
@@ -73,9 +57,6 @@ void BattleLevel::Update(float delta_time)
   }
 }
 
-/// <summary>
-/// 描画処理
-/// </summary>
 void BattleLevel::Render()
 {
   // 背景画像を描画
@@ -86,9 +67,6 @@ void BattleLevel::Render()
   //printfDx("handle is %d\n", battle_bg_handle_);
 }
 
-/// <summary>
-/// レベルの開始
-/// </summary>
 void BattleLevel::BeginLevel()
 {
   // 背景画像の読み込み
@@ -96,6 +74,7 @@ void BattleLevel::BeginLevel()
 
   // プレイヤーの生成
   player_ = new Player();
+  player_->BeginPlayer();
 
   //タスクマネージャーに放り込む
   TaskManager::GetInstance()->AddTask(player_);

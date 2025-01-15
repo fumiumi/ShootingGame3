@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "Player.h"
+#include "InputManager.h"
 
 namespace
 {
@@ -12,27 +13,16 @@ namespace
 /// </summary>
 const char *kPlayerImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Player/Player.png";
 
-/// <summary>
-/// x方向の分割数
-/// </summary>
 const int kPlayerImageDivX = 2;
-/// <summary>
-/// y方向の分割数
-/// </summary>
 const int kPlayerImageDivY = 2;
-/// <summary>
-/// 分割した画像の幅
-/// </summary>
 const int kPlayerImageDivSizeX = 64;
-/// <summary>
-/// 分割した画像の高さ
-/// </summary>
 const int kPlayerImageDivSizeY = 64;
+
+const int kPlayerStraightVelocity = 5;
+const int kPlayerBankVelocity = 5;
+const int kPlayerBackVelocity = 3;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
 Player::Player()
   : Task(),
   positionX_(640), // マジックナンバーはやめたい
@@ -42,9 +32,6 @@ Player::Player()
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
 Player::~Player()
 {
   // 画像の解放
@@ -74,23 +61,42 @@ void Player::Update(float delta_time)
     //TODO: エラー時の処理を考える
   }
 
-  // 仮実装
-  // 画像の読み込み
-  //CAUTION: DxLib_Init()が呼ばれていることが前提
-  LoadPlayerImage();
-  player_state_ = PlayerState::kStraight;
+  // 入力処理
+  InputManager *input_manager = InputManager::GetInstance();
+  // 右
+  if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kRight))
+  {
+    player_state_ = PlayerState::kRightBank;
+    SetPosition(positionX_ + kPlayerBankVelocity, positionY_);
+  }
+  // 左
+  else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kLeft))
+  {
+    player_state_ = PlayerState::kLeftBank;
+    SetPosition(positionX_ - kPlayerBankVelocity, positionY_);
+  }
+  // 上
+  else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kUp))
+  {
+    player_state_ = PlayerState::kStraight;
+    SetPosition(positionX_, positionY_ - kPlayerStraightVelocity);
+  }
+  // 下
+  else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kDown))
+  {
+    player_state_ = PlayerState::kStraight;
+    SetPosition(positionX_, positionY_ + kPlayerStraightVelocity);
+  }
+  else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
+  {
+    // fire
+  };
 }
 
 void Player::Render()
 {
   //状態をハンドル指定に変換
   int drawHandleNum = static_cast<int>(player_state_);
-
-  //DEBUG: ハンドルの中身を確認
-  for (int i = 0; i < kPlayerImageDivNum; i++)
-  {
-    printfDx("handle[%d] is %d\n", i, player_handle_array_[i]);
-  }
 
   // 画像の描画
   int result = DrawGraph(
@@ -105,7 +111,7 @@ void Player::Render()
     // エラーログを出力
     printfDx("画像の出力に失敗しました\n");
     //TODO: とりあえずkErrorにしておくけど、その後の処理はまだ未定
-    player_state_ = PlayerState::kError;
+    //player_state_ = PlayerState::kError;
   }
 }
 
@@ -122,15 +128,13 @@ void Player::LoadPlayerImage()
     player_handle_array_ // 配列の先頭アドレスを渡す
   );
 
-  //handle_ = LoadGraph(kPlayerImageFilePath);
-
   // 画像の読み込みに失敗
   if (result == -1)
   {
     // エラーログを出力
     printfDx("画像の読み込みに失敗しました\n");
     //TODO: とりあえずkErrorにしておくけど、その後の処理はまだ未定
-    player_state_ = PlayerState::kError;
+    //player_state_ = PlayerState::kError;
   }
 }
 
@@ -140,4 +144,12 @@ void Player::RemovePlayerImage()
   {
     DeleteGraph(handle);
   }
+}
+
+void Player::BeginPlayer()
+{
+  // 仮実装
+  // 画像の読み込み
+  //CAUTION: DxLib_Init()が呼ばれていることが前提
+  LoadPlayerImage();
 }

@@ -10,28 +10,11 @@ class LevelBase : public Task
 {
 
 public:
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
 	explicit LevelBase();
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
 	virtual ~LevelBase();
 
-	/// <summary>
-	/// 毎フレームの更新処理
-	/// 派生先のレベルでオーバーライドする
-	/// </summary>
-	/// <param name="delta_time">前回実行フレームからの経過時間（秒）</param>
 	void Update(float delta_time) override;
 
-	/// <summary>
-	/// 毎フレームの描画処理
-	/// 派生先のレベルでオーバーライドする
-	/// </summary>
 	void Render() override;
 
 	// 以下は各レベルオブジェクト固有の機能

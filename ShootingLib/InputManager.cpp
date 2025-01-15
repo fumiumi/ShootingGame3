@@ -1,9 +1,8 @@
 #include "InputManager.h"
 #include "DxLib.h"
 
-// C++11以降のシングルトンパターンを使うのでこの処理は不要
-////タスクマネージャーのインスタンス初期化
-//InputManager *InputManager::instance_ = nullptr;
+//タスクマネージャーのインスタンス初期化
+InputManager *InputManager::instance_ = nullptr;
 
 /// <summary>
 /// InputManager.cppのみで使う定数
@@ -78,23 +77,11 @@ void InputManager::RecordKeyStateAll(float delta_time)
 /// </summary>
 /// <param name="key_kind">調べるキー</param>
 /// <returns>押されているならtrue</returns>
-bool InputManager::IsPushThisFlame(GameKeyKind game_key_kind)
+bool InputManager::IsPushThisFrame(GameKeyKind game_key_kind)
 {
 	int target_key = kDxlibKeyKind[static_cast<int>(game_key_kind)];
 
-	//current_key_buffer_ と pre_key_buffer_ の値をチェックし
-	//このフレームでキーが押さた瞬間なら true を返す
-  if (current_key_buffer_[target_key] == 1 
-			&& pre_key_buffer_[target_key] == 0
-		 )
-  {
-    return true;
-  }
-	//このフレームでキーが押された瞬間ではないなら false を返す
-	else if(current_key_buffer_[target_key] == 0)
-	{
-    return false;
-	}
+	return (current_key_buffer_[target_key] == 1 && pre_key_buffer_[target_key] == 0);
 }
 
 /// <summary>

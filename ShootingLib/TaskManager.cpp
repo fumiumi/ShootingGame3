@@ -4,14 +4,8 @@
 //タスクマネージャーのインスタンス初期化
 TaskManager *TaskManager::instance_ = nullptr;
 
-/// <summary>
-/// 割り当てるタスクIDの最初の数値
-/// </summary>
 const TaskId TaskManager::kStartTaskId = 100;
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
 TaskManager::TaskManager()
   : task_list_(),
   add_task_list_(),
@@ -20,18 +14,10 @@ TaskManager::TaskManager()
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
 TaskManager::~TaskManager()
 {
 }
 
-/// <summary>
-/// タスクを追加する
-/// </summary>
-/// <param name="task">追加するタスク</param>
-/// <returns>発行したTaskId, 失敗したら-1</returns>
 TaskId TaskManager::AddTask(Task *task)
 {
   //追加するタスクがnullptrなら失敗
@@ -64,11 +50,6 @@ TaskId TaskManager::AddTask(Task *task)
   return assign_id;
 }
 
-/// <summary>
-/// タスクを解放する
-/// </summary>
-/// <param name="task_id">タスクID</param>
-/// <returns>成功：解放したタスク、失敗：nullptr</returns>
 Task *TaskManager::ReleaseTask(TaskId task_id)
 {
   Task *find_task = nullptr;
@@ -100,10 +81,6 @@ Task *TaskManager::ReleaseTask(TaskId task_id)
   return find_task;
 }
 
-/// <summary>
-/// タスクの毎フレーム更新処理を実行する
-/// </summary>
-/// <param name="delta_time">最後のフレームを完了するのに要した時間 (秒) </param>
 void TaskManager::UpdateTask(float delta_time)
 {
   //リスト内のタスクの毎フレーム更新処理
@@ -150,9 +127,6 @@ void TaskManager::UpdateTask(float delta_time)
   release_task_list_.clear();
 }
 
-/// <summary>
-/// タスクの毎フレームの描画理を実行する
-/// </summary>
 void TaskManager::RenderTask()
 {
   //タスクの毎フレーム描画処理

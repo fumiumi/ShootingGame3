@@ -1,3 +1,4 @@
+#include "DxLib.h"
 #include <TaskManager.h>
 #include "LevelChanger.h"
 #include "TitleLevel.h"
@@ -6,9 +7,6 @@
 //レベルチェンジャーのインスタンス初期化
 LevelChanger *LevelChanger::instance_ = nullptr;
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
 LevelChanger::LevelChanger()
 	: current_level_changer_state_(LevelChangerState::kWait),
 		current_level_(nullptr),
@@ -16,24 +14,15 @@ LevelChanger::LevelChanger()
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
 LevelChanger::~LevelChanger() = default;
 
-/// <summary>
-/// レベルチェンジャーの状態を設定する
-/// </summary>
-/// <param name="level_changer_state">設定する状態</param>
 void LevelChanger::SetLevelChangerState(LevelChanger::LevelChangerState level_changer_state)
 {
+	//DEBUG
+  printfDx("レベルチェンジ\n");
 	current_level_changer_state_ = level_changer_state;
 }
 
-/// <summary>
-/// 毎フレームの更新処理
-/// </summary>
-/// <param name="delta_time">前回実行フレームからの経過時間（秒）</param>
 void LevelChanger::Update(float delta_time)
 {
 	//新しくレベルを生成したフラグ
