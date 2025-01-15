@@ -36,9 +36,6 @@ const int kDxlibKeyKind[static_cast<int>(InputManager::GameKeyKind::kNum)] =
 };
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
 InputManager::InputManager()
 	: current_key_buffer_{ 0 },
 		pre_key_buffer_{ 0 }

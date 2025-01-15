@@ -67,25 +67,67 @@ void Player::Update(float delta_time)
   if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kRight))
   {
     player_state_ = PlayerState::kRightBank;
-    SetPosition(positionX_ + kPlayerBankVelocity, positionY_);
+    
+    positionX_ += kPlayerBankVelocity;
+
+    // 画面外に出ないようにする
+    // 画像のサイズを考慮
+    if (positionX >= 1280 - kPlayerImageDivSizeX)
+    {
+      positionX = 1280;
+    }
+    else if (positionX < 0)
+    {
+      positionX = 0;
+    }
   }
   // 左
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kLeft))
   {
     player_state_ = PlayerState::kLeftBank;
-    SetPosition(positionX_ - kPlayerBankVelocity, positionY_);
+    positionX_ -= kPlayerBankVelocity;
+
+    // 画面外に出ないようにする
+    if (positionX > 1280 - kPlayerImageDivSizeX)
+    {
+      positionX = 1280;
+    }
+    else if (positionX <= 0)
+    {
+      positionX = 0;
+    }
   }
   // 上
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kUp))
   {
     player_state_ = PlayerState::kStraight;
-    SetPosition(positionX_, positionY_ - kPlayerStraightVelocity);
+    positionY_ -= kPlayerStraightVelocity;
+
+    // 画面外に出ないようにする
+    if (positionY > 720 - kPlayerImageDivSizeY)
+    {
+      positionY = 720;
+    }
+    else if (positionY <= 0)
+    {
+      positionY = 0;
+    }
   }
   // 下
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kDown))
   {
     player_state_ = PlayerState::kStraight;
-    SetPosition(positionX_, positionY_ + kPlayerStraightVelocity);
+    positionY_ += kPlayerBackVelocity;
+
+    // 画面外に出ないようにする
+    if (positionY >= 720 - kPlayerImageDivSizeY)
+    {
+      positionY = 720;
+    }
+    else if (positionY < 0)
+    {
+      positionY = 0;
+    }
   }
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
   {

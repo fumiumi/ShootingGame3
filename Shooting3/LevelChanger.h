@@ -47,11 +47,6 @@ public:
 		kDestroyCurrentLevel,
 	};
 
-	/// <summary>
-	/// LevelChangerのインスタンスを取得する
-	/// （シングルトンデザインパターン）
-	/// </summary>
-	/// <returns></returns>
 	static LevelChanger *GetInstance()
 	{
 		//生成されてないなら動的生成
@@ -64,10 +59,6 @@ public:
 		return instance_;
 	}
 
-	/// <summary>
-	/// LevelChangerのインスタンスを削除
-	/// ゲーム終了時に必ず呼ぶ
-	/// </summary>
 	static void Destory()
 	{
 		//生成済みなら削除
@@ -84,10 +75,6 @@ public:
 	/// <param name="level_changer_state">設定する状態</param>
 	void SetLevelChangerState(LevelChangerState level_changer_state);
 
-	/// <summary>
-	/// 毎フレームの更新処理
-	/// </summary>
-	/// <param name="delta_time">前回実行フレームからの経過時間（秒）</param>
 	void Update(float delta_time) override;
 
 	/// <summary>
@@ -98,19 +85,10 @@ public:
 	void ForceDestroyCurrentLevel();
 
 private:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
 	explicit LevelChanger();
 
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
 	virtual ~LevelChanger() override;
 
-	/// <summary>
-	/// LevelChangerのインスタンス
-	/// </summary>
 	static LevelChanger *instance_;
 
 	/// <summary>	
@@ -118,12 +96,6 @@ private:
 	/// </summary>
 	LevelChangerState current_level_changer_state_;
 
-	/// <summary>
-	/// 現在のレベル
-	/// レベル：
-	/// TitleLevel
-	/// BattleLevel
-	/// </summary>
 	LevelBase *current_level_;
 
 	/// <summary>

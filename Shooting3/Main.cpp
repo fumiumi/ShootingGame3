@@ -206,7 +206,7 @@ int WINAPI WinMain(
   level_changer->ForceDestroyCurrentLevel();
 	level_changer->Destory();
   task_manager->Destroy();
-  //input_manager‚ÍŽ©“®‚Å”jŠü‚³‚ê‚é
+  input_manager->Destory();
 
 	DxLib_End();
 
