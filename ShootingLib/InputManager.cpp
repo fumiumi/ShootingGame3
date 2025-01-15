@@ -76,6 +76,9 @@ void InputManager::RecordKeyStateAll(float delta_time)
 /// <returns>押されているならtrue</returns>
 bool InputManager::IsPushThisFrame(GameKeyKind game_key_kind)
 {
+	//current_key_buffer_ と pre_key_buffer_ の値をチェックし
+	//このフレームでキーが押さた瞬間なら true を返す
+//このフレームでキーが押された瞬間ではないなら false を返す
 	int target_key = kDxlibKeyKind[static_cast<int>(game_key_kind)];
 
 	return (current_key_buffer_[target_key] == 1 && pre_key_buffer_[target_key] == 0);

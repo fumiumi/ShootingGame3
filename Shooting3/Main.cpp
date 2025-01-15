@@ -185,7 +185,6 @@ int WINAPI WinMain(
 			//描画関連を呼ぶ
 			task_manager->RenderTask();
 
-
 			//フレームレートの計算
 			CalcFrameRate();
 

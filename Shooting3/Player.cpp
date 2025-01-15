@@ -22,7 +22,7 @@ const int kPlayerImageDivSizeY = 64;
 
 const int kPlayerStraightVelocity = 30;
 const int kPlayerBankVelocity = 30;
-const int kPlayerBackVelocity = 20;
+const int kPlayerDownVelocity = 20;
 
 const int kPlayerInitPosX = 640;
 const int kPlayerInitPosY = 360;
@@ -87,6 +87,10 @@ void Player::Update(float delta_time)
   }
 
   // 入力処理
+  //HACK: 移動と状態遷移が結合している
+  //XXX: 同時に押したときの処理ができない、分岐の最初の方が優先度が高くなっている
+  // IsDown()の方が操作性がいいが、IsPushThisFrame()の方が同時押し対策にはなる？
+  // ステートマシンを使いたい・・・
   InputManager *input_manager = InputManager::GetInstance();
   // 右
   if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kRight))
@@ -106,7 +110,7 @@ void Player::Update(float delta_time)
   // 下
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kDown))
   {
-    MovePlayer(positionY_, kPlayerBackVelocity, kBgEndTop, kBgEndBottom - kPlayerImageDivSizeY, PlayerState::kStraight);
+    MovePlayer(positionY_, kPlayerDownVelocity, kBgEndTop, kBgEndBottom - kPlayerImageDivSizeY, PlayerState::kStraight);
   }
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
   {

@@ -36,15 +36,6 @@ public:
   int GetPositionX() const;
   int GetPositionY() const;
 
-  /// <summary>
-  /// プレイヤーの移動処理
-  /// </summary>
-  /// <param name="position">x方向かy方向か</param>
-  /// <param name="velocity"></param>
-  /// <param name="limit_min">positionの移動可能な範囲の最小値</param>
-  /// <param name="limit_max">positionの移動可能な範囲の最大値</param>
-  /// <param name="state"></param>
-  void MovePlayer(int &position, int velocity, int limit_min, int limit_max, PlayerState state);
 
   void Update(float delta_time) override;
 
@@ -63,8 +54,17 @@ private:
   /// </summary>
   static constexpr int kPlayerImageDivNum = 4;
 
-  //TIPS: 3Dゲーム空間の座標系は左手系が一般的
+  /// <summary>
+  /// プレイヤーの移動処理
+  /// </summary>
+  /// <param name="position">x方向かy方向か</param>
+  /// <param name="velocity"></param>
+  /// <param name="limit_min">positionの移動可能な範囲の最小値</param>
+  /// <param name="limit_max">positionの移動可能な範囲の最大値</param>
+  /// <param name="state"></param>
+  void MovePlayer(int &position, int velocity, int limit_min, int limit_max, PlayerState state);
 
+  //TIPS: 3Dゲーム空間の座標系は左手系が一般的
   int positionX_;
   int positionY_;
 
