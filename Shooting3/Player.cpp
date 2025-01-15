@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "GameInfo.h"
+#include <algorithm>
 
 namespace
 {
@@ -68,11 +69,21 @@ int Player::GetPositionY() const
   return positionY_;
 }
 
+void Player::MovePlayer(int &position, int velocity, int limit_min, int limit_max, PlayerState state)
+{
+  player_state_ = state;
+
+  position += velocity;
+
+  position = std::clamp(position, limit_min, limit_max);
+}
+
 void Player::Update(float delta_time)
 {
   if (player_state_ == PlayerState::kError)
   {
     //TODO: エラー時の処理を考える
+    printfDx("player_state_ == PlayerState::kError\n");
   }
 
   // 入力処理
@@ -80,73 +91,27 @@ void Player::Update(float delta_time)
   // 右
   if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kRight))
   {
-    player_state_ = PlayerState::kRightBank;
-    
-    positionX_ += kPlayerBankVelocity;
-
-    // 画面外に出ないようにする
-    // 画像のサイズを考慮
-    if (positionX_ >= kBgEndRight - kPlayerImageDivSizeX)
-    {
-      positionX_ = kBgEndRight - kPlayerImageDivSizeX;
-    }
-    else if (positionX_ < kBgEndLeft)
-    {
-      positionX_ = kBgEndLeft;
-    }
+    MovePlayer(positionX_, kPlayerBankVelocity, kBgEndLeft, kBgEndRight - kPlayerImageDivSizeX, PlayerState::kRightBank);
   }
   // 左
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kLeft))
   {
-    player_state_ = PlayerState::kLeftBank;
-    positionX_ -= kPlayerBankVelocity;
-
-    // 画面外に出ないようにする
-    if (positionX_ > kBgEndRight - kPlayerImageDivSizeX)
-    {
-      positionX_ = kBgEndRight - kPlayerImageDivSizeX;
-    }
-    else if (positionX_ <= kBgEndLeft)
-    {
-      positionX_ = kBgEndLeft;
-    }
+    MovePlayer(positionX_, -kPlayerBankVelocity, kBgEndLeft, kBgEndRight - kPlayerImageDivSizeX, PlayerState::kLeftBank);
   }
   // 上
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kUp))
   {
-    player_state_ = PlayerState::kStraight;
-    positionY_ -= kPlayerStraightVelocity;
-
-    // 画面外に出ないようにする
-    if (positionY_ > kBgEndBottom - kPlayerImageDivSizeY)
-    {
-      positionY_ = kBgEndBottom - kPlayerImageDivSizeY;
-    }
-    else if (positionY_ <= kBgEndTop)
-    {
-      positionY_ = kBgEndTop;
-    }
+    MovePlayer(positionY_, -kPlayerStraightVelocity, kBgEndTop, kBgEndBottom - kPlayerImageDivSizeY, PlayerState::kStraight);
   }
   // 下
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kDown))
   {
-    player_state_ = PlayerState::kStraight;
-    positionY_ += kPlayerBackVelocity;
-
-    // 画面外に出ないようにする
-    if (positionY_ >= kBgEndBottom - kPlayerImageDivSizeY)
-    {
-      positionY_ = kBgEndBottom - kPlayerImageDivSizeY;
-    }
-    else if (positionY_ < kBgEndTop)
-    {
-      positionY_ = kBgEndTop;
-    }
+    MovePlayer(positionY_, kPlayerBackVelocity, kBgEndTop, kBgEndBottom - kPlayerImageDivSizeY, PlayerState::kStraight);
   }
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
   {
     // fire
-  };
+  }
 }
 
 void Player::Render()

@@ -36,6 +36,16 @@ public:
   int GetPositionX() const;
   int GetPositionY() const;
 
+  /// <summary>
+  /// プレイヤーの移動処理
+  /// </summary>
+  /// <param name="position">x方向かy方向か</param>
+  /// <param name="velocity"></param>
+  /// <param name="limit_min">positionの移動可能な範囲の最小値</param>
+  /// <param name="limit_max">positionの移動可能な範囲の最大値</param>
+  /// <param name="state"></param>
+  void MovePlayer(int &position, int velocity, int limit_min, int limit_max, PlayerState state);
+
   void Update(float delta_time) override;
 
   void Render() override;
