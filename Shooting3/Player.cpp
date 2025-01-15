@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "Player.h"
 #include "InputManager.h"
+#include "GameInfo.h"
 
 namespace
 {
@@ -18,15 +19,28 @@ const int kPlayerImageDivY = 2;
 const int kPlayerImageDivSizeX = 64;
 const int kPlayerImageDivSizeY = 64;
 
-const int kPlayerStraightVelocity = 5;
-const int kPlayerBankVelocity = 5;
-const int kPlayerBackVelocity = 3;
+const int kPlayerStraightVelocity = 30;
+const int kPlayerBankVelocity = 30;
+const int kPlayerBackVelocity = 20;
+
+const int kPlayerInitPosX = 640;
+const int kPlayerInitPosY = 360;
+
+const int kBgSizeX = 880; // BattleLevel.cppを参照
+const int kBgSizeY = 720; // BattleLevel.cppを参照
+
+// プレイヤーが移動できる範囲
+GameInfo *game_info = GameInfo::GetInstance();
+const int kBgEndLeft = game_info->GetCenterX() - kBgSizeX / 2;
+const int kBgEndRight = game_info->GetCenterX() + kBgSizeX / 2;
+const int kBgEndTop = 0;
+const int kBgEndBottom = game_info->GetResolutionY();
 }
 
 Player::Player()
   : Task(),
-  positionX_(640), // マジックナンバーはやめたい
-  positionY_(360), // 数マジックナンバーはやめたい
+  positionX_(kPlayerInitPosX),
+  positionY_(kPlayerInitPosY),
   player_state_(PlayerState::kStraight),
   player_handle_array_{0, 0, 0, 0}
 {
@@ -72,13 +86,13 @@ void Player::Update(float delta_time)
 
     // 画面外に出ないようにする
     // 画像のサイズを考慮
-    if (positionX >= 1280 - kPlayerImageDivSizeX)
+    if (positionX_ >= kBgEndRight - kPlayerImageDivSizeX)
     {
-      positionX = 1280;
+      positionX_ = kBgEndRight - kPlayerImageDivSizeX;
     }
-    else if (positionX < 0)
+    else if (positionX_ < kBgEndLeft)
     {
-      positionX = 0;
+      positionX_ = kBgEndLeft;
     }
   }
   // 左
@@ -88,13 +102,13 @@ void Player::Update(float delta_time)
     positionX_ -= kPlayerBankVelocity;
 
     // 画面外に出ないようにする
-    if (positionX > 1280 - kPlayerImageDivSizeX)
+    if (positionX_ > kBgEndRight - kPlayerImageDivSizeX)
     {
-      positionX = 1280;
+      positionX_ = kBgEndRight - kPlayerImageDivSizeX;
     }
-    else if (positionX <= 0)
+    else if (positionX_ <= kBgEndLeft)
     {
-      positionX = 0;
+      positionX_ = kBgEndLeft;
     }
   }
   // 上
@@ -104,13 +118,13 @@ void Player::Update(float delta_time)
     positionY_ -= kPlayerStraightVelocity;
 
     // 画面外に出ないようにする
-    if (positionY > 720 - kPlayerImageDivSizeY)
+    if (positionY_ > kBgEndBottom - kPlayerImageDivSizeY)
     {
-      positionY = 720;
+      positionY_ = kBgEndBottom - kPlayerImageDivSizeY;
     }
-    else if (positionY <= 0)
+    else if (positionY_ <= kBgEndTop)
     {
-      positionY = 0;
+      positionY_ = kBgEndTop;
     }
   }
   // 下
@@ -120,13 +134,13 @@ void Player::Update(float delta_time)
     positionY_ += kPlayerBackVelocity;
 
     // 画面外に出ないようにする
-    if (positionY >= 720 - kPlayerImageDivSizeY)
+    if (positionY_ >= kBgEndBottom - kPlayerImageDivSizeY)
     {
-      positionY = 720;
+      positionY_ = kBgEndBottom - kPlayerImageDivSizeY;
     }
-    else if (positionY < 0)
+    else if (positionY_ < kBgEndTop)
     {
-      positionY = 0;
+      positionY_ = kBgEndTop;
     }
   }
   else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
