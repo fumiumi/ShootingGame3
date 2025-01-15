@@ -171,9 +171,6 @@ int WINAPI WinMain(
 			//フレーム実行のたびにFPSをカウントする
 			++frame_count;
 
-			//画面の消去
-			ClearDrawScreen();
-
 			//ウィンドウがアクティブなら実行する処理
 			if (GetWindowActiveFlag() == TRUE)
 			{
@@ -181,6 +178,9 @@ int WINAPI WinMain(
 				task_manager->UpdateTask(delta_time);
         input_manager->RecordKeyStateAll(delta_time);
 			}
+
+			//画面の消去
+			ClearDrawScreen();
 
 			//描画関連を呼ぶ
 			task_manager->RenderTask();
@@ -197,6 +197,8 @@ int WINAPI WinMain(
 
 			//表画面への出力
 			ScreenFlip();
+
+
 		}
 	}
 

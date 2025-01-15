@@ -9,8 +9,8 @@ LevelChanger *LevelChanger::instance_ = nullptr;
 
 LevelChanger::LevelChanger()
   : current_level_changer_state_(LevelChangerState::kWait),
-  current_level_(nullptr),
-  next_level_changer_state_after_destroy_(LevelChangerState::kWait)
+    current_level_(nullptr),
+    next_level_changer_state_after_destroy_(LevelChangerState::kWait)
 {
 }
 
