@@ -4,33 +4,53 @@ class BulletBase
 {
 public:
   BulletBase();
-  virtual ~BulletBase() = 0;
+  virtual ~BulletBase();
 
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
   /// </summary>
   /// <param name="delta_time"></param>
-  void Update(float delta_time);
+  virtual void Update(float delta_time);
 
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
   /// </summary>
-  void Render();
+  virtual void Render() = 0;
 
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
   /// </summary>
   /// <param name="x"></param>
   /// <param name="y"></param>
-  void Fire(float x, float y);
+  virtual void Fire(int bullet_x, int bullet_y) = 0;
 
-private:
-  float x_;
-  float y_;
-  float velocity_;
+  void SetX(int bullet_x);
+
+  void SetY(int bullet_y);
+
+  int GetX() const;
+
+  int GetY() const;
+
+  virtual void SetVelocity(int bullet_velocity);
+
+  int GetVelocity() const;
+
+  void SetIsFired(bool is_fired);
+
+  bool GetIsFired() const;
+
+  void LoadImageHandle(const char *file_path);
+
+  void RemoveImageHandle();
+
+protected:
+  int bullet_x_;
+  int bullet_y_;
+  int bullet_velocity_;
 
   bool is_fired_;
 
-  int bulllet_handle_;
+  int bullet_handle_;
 
 };
