@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Task.h"
 #include <vector>
 
 namespace
@@ -21,15 +20,13 @@ const int kBgSizeX = 880;
 const int kBgSizeY = 720;
 }
 
-class BackGround : public Task
+class BackGround
 {
 public:
   BackGround();
   ~BackGround();
 
-  void Update(float delta_time) override;
-
-  void Render() override;
+  void Render();
 
   void LoadImages();
 

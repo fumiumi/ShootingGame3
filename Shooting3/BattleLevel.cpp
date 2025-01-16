@@ -3,6 +3,7 @@
 #include "BattleLevel.h"
 #include "TaskManager.h"
 
+
 namespace
 {
 /// <summary>

@@ -179,6 +179,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BulletBase.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LevelBase.h" />
@@ -186,6 +188,8 @@
     <ClInclude Include="TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BulletBase.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LevelBase.cpp" />

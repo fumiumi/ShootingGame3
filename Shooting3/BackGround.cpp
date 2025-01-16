@@ -10,11 +10,6 @@ BackGround::BackGround()
 
 BackGround::~BackGround() = default;
 
-void BackGround::Update(float delta_time)
-{
-  //‚È‚É‚©•K—vH
-}
-
 void BackGround::Render()
 {
   // ”wŒi‰æ‘œ‚Ì•`‰æ
