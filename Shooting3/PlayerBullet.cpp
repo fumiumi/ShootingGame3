@@ -1,6 +1,7 @@
 #include "PlayerBullet.h"
 #include "DxLib.h"
 #include "InputManager.h"
+#include "GameInfo.h"
 
 namespace
 {
@@ -48,11 +49,12 @@ void PlayerBullet::Render()
 // BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
 void PlayerBullet::Fire(int bullet_x, int bullet_y)
 {
+  GameInfo *game_info = GameInfo::GetInstance();
   if (!is_fired_)
   {  
-  bullet_x_ = bullet_x - kPlayerBulletWidth / 2;
+  bullet_x_ = bullet_x + (game_info->GetPlayerImageWidth() - kPlayerBulletWidth) / 2;
   // ”O‚Ìˆ×+ bullet_velocity_
-  bullet_y_ = bullet_y - kPlayerBulletHeight / 2 + bullet_velocity_;
+  bullet_y_ = bullet_y - kPlayerBulletHeight + bullet_velocity_;
   is_fired_ = true;
   }
 }

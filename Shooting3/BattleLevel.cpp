@@ -24,7 +24,8 @@ BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
     player_(nullptr),
     elapsed_time_(0.0f),
-    back_ground_(new BackGround)
+    back_ground_(new BackGround),
+    bullet_manager_(new BulletManager)
 {
 }
 
@@ -71,11 +72,14 @@ void BattleLevel::BeginLevel()
   back_ground_->LoadImages();
 
   // プレイヤー
-  player_ = new Player();
+  player_ = new Player(this);
   player_->BeginPlayer();
+
+  bullet_manager_->LoadBulletImageHandle();
 
   //タスクマネージャーに放り込む
   TaskManager::GetInstance()->AddTask(player_);
+  TaskManager::GetInstance()->AddTask(bullet_manager_);
 
   // バトルレベルの状態をプレイに設定
   battle_level_state_ = BattleLevelState::kPlay;

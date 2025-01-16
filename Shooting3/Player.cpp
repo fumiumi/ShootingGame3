@@ -1,8 +1,10 @@
 #include <DxLib.h>
+#include <algorithm>
 #include "Player.h"
 #include "InputManager.h"
 #include "GameInfo.h"
-#include <algorithm>
+#include "BattleLevel.h"
+#include "BulletManager.h"
 
 namespace
 {
@@ -27,23 +29,24 @@ const int kPlayerDownVelocity = 20;
 const int kPlayerInitPosX = 640;
 const int kPlayerInitPosY = 360;
 
-const int kBgSizeX = 880; // BattleLevel.cppを参照
-const int kBgSizeY = 720; // BattleLevel.cppを参照
+const int kBgImgSizeX = 880; // BattleLevel.cppを参照
+const int kBgImgSizeY = 720; // BattleLevel.cppを参照
 
 // プレイヤーが移動できる範囲
 GameInfo *game_info = GameInfo::GetInstance();
-const int kBgEndLeft = game_info->GetCenterX() - kBgSizeX / 2;
-const int kBgEndRight = game_info->GetCenterX() + kBgSizeX / 2;
+const int kBgEndLeft = game_info->GetCenterX() - kBgImgSizeX / 2;
+const int kBgEndRight = game_info->GetCenterX() + kBgImgSizeX / 2;
 const int kBgEndTop = 0;
 const int kBgEndBottom = game_info->GetResolutionY();
 }
 
-Player::Player()
+Player::Player(BattleLevel *battle_level)
   : Task(),
   positionX_(kPlayerInitPosX),
   positionY_(kPlayerInitPosY),
   player_state_(PlayerState::kStraight),
-  player_handle_array_{0, 0, 0, 0}
+  player_handle_array_{0, 0, 0, 0},
+  battle_level_(battle_level)
 {
 }
 
@@ -90,7 +93,6 @@ void Player::Update(float delta_time)
   //HACK: 移動と状態遷移が結合している
   //XXX: 同時に押したときの処理ができない、分岐の最初の方が優先度が高くなっている
   // IsDown()の方が操作性がいいが、IsPushThisFrame()の方が同時押し対策にはなる？
-  // ステートマシンを使いたい・・・
   InputManager *input_manager = InputManager::GetInstance();
   // 右
   if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kRight))
@@ -112,9 +114,11 @@ void Player::Update(float delta_time)
   {
     MovePlayer(positionY_, kPlayerDownVelocity, kBgEndTop, kBgEndBottom - kPlayerImageDivSizeY, PlayerState::kStraight);
   }
-  else if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
+
+  // 弾の発射
+  if (input_manager->IsPushThisFrame(InputManager::GameKeyKind::kPlayerFire))
   {
-    // fire
+    battle_level_->bullet_manager_->FireBullet(BulletManager::BulletKind::kPlayer, positionX_, positionY_);
   }
 }
 

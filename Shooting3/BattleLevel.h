@@ -8,6 +8,8 @@
 
 class BattleLevel : public LevelBase
 {
+  friend class Player;
+
 public:
   // TODO: フェードアウト・フェードインなどが実装されたら、
   // フェードアウト待ちの状態を実装

@@ -35,6 +35,9 @@ public:
 	int GetCenterX();
 	int GetCenterY();
 
+  int GetPlayerImageWidth();
+  int GetPlayerImageHeight();
+
 	int GetColorBit();
 
 	bool IsDebugDisplay();

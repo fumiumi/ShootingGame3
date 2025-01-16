@@ -6,6 +6,7 @@
 
 class BulletManager : public Task
 {
+
 public:
   enum class BulletKind
   {
@@ -21,16 +22,19 @@ public:
   void Update(float delta_time) override;
 
   void Render() override;
-
+  
   void Initialize(int bullet_num);
+
+  void FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y);
 
   void AddBullet(BulletKind bullet_kind, BulletBase *bullet);
 
   //void ActivateBullet(BulletKind bullet_kind);
   void DeactiveBullet(BulletKind bullet_kind);
 
+  void LoadBulletImageHandle();
+
 private:
-  void FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y);
 
   using BulletContainer = std::vector<BulletBase *> ;
   std::unordered_map<BulletKind, BulletContainer> bullet_map_;

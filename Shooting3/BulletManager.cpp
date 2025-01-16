@@ -45,6 +45,23 @@ void BulletManager::Initialize(int bullet_num)
   }
 }
 
+void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y)
+{
+  if (bullet_map_[bullet_kind].empty())
+  {
+    return;
+  }
+
+  for (auto bullet : bullet_map_[bullet_kind])
+  {
+    if (!bullet->GetIsFired())
+    {
+      bullet->Fire(bullet_x, bullet_y);
+      return;
+    }
+  }
+}
+
 void BulletManager::AddBullet(BulletKind bullet_kind, BulletBase *bullet)
 {
   bullet_map_[bullet_kind].emplace_back(bullet);
@@ -90,19 +107,13 @@ void BulletManager::DeactiveBullet(BulletKind bullet_kind)
   }
 }
 
-void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y)
+void BulletManager::LoadBulletImageHandle()
 {
-  if (bullet_map_[bullet_kind].empty())
+  for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy })
   {
-    return;
-  }
-
-  for (auto bullet : bullet_map_[bullet_kind])
-  {
-    if (!bullet->GetIsFired())
+    for (auto bullet : bullet_map_[bullet_kind])
     {
-      bullet->Fire(bullet_x, bullet_y);
-      return;
+      bullet->LoadImageHandle();
     }
   }
 }

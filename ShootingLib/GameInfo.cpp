@@ -5,6 +5,9 @@ namespace
 int kWidth = 1280;
 int kHeight = 720;
 int kColorBit = 32;
+
+int kPlayerImageWidth = 64;
+int kPlayerImageHeight = 64;
 }
 
 GameInfo *GameInfo::instance_ = nullptr;
@@ -38,6 +41,16 @@ int GameInfo::GetCenterX()
 int GameInfo::GetCenterY()
 {
   return y_center_;
+}
+
+int GameInfo::GetPlayerImageWidth()
+{
+  return kPlayerImageWidth;
+}
+
+int GameInfo::GetPlayerImageHeight()
+{
+  return kPlayerImageHeight;
 }
 
 int GameInfo::GetColorBit()

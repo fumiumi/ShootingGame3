@@ -1,7 +1,10 @@
 #pragma once
 
+
 class BulletBase
 {
+friend class Player;
+
 public:
   BulletBase();
   virtual ~BulletBase() = default;

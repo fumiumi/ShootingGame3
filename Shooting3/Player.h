@@ -1,6 +1,10 @@
 #pragma once
 
 #include "Task.h"
+#include "PlayerBullet.h"
+
+// 前方宣言
+class BattleLevel;
 
 class Player : public Task
 {
@@ -29,7 +33,7 @@ public:
     kError = 3,
   };
 
-  Player();
+  Player(BattleLevel *battle_level);
   ~Player();
 
   void SetPosition(int x, int y);
@@ -47,7 +51,6 @@ public:
   void RemovePlayerImage();
 
   void BeginPlayer();
-
 
 private:
   /// <summary>
@@ -79,5 +82,10 @@ private:
   /// Dxライブラリで画像を管理するためのハンドル
   /// </summary>
   int player_handle_array_[kPlayerImageDivNum];
+
+  /// <summary>
+  /// BulletManagerを間接的に操作するためのポインタ
+  /// </summary>
+  BattleLevel *battle_level_;
 };
 
