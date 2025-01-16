@@ -17,24 +17,23 @@ BulletManager::BulletManager()
 
 void BulletManager::Update(float delta_time)
 {
-  for (auto bullet : bullet_map_[BulletKind::kPlayer])
+  for (bullet_kind : BulletKind)
   {
-    bullet->Update(delta_time);
+    for (auto bullet : bullet_map_[bullet_kind])
+    {
+      bullet->Update(delta_time);
+    }
   }
-  for (auto bullet : bullet_map_[BulletKind::kEnemy])
-  {
-    bullet->Update(delta_time);
 }
 
 void BulletManager::Render()
 {
-  for (auto bullet : bullet_map_[BulletKind::kPlayer])
+  for (bullet_kind : BulletKind)
   {
-    bullet->Render();
-  }
-  for (auto bullet : bullet_map_[BulletKind::kEnemy])
-  {
-    bullet->Render();
+    for (auto bullet : bullet_map_[bullet_kind])
+    {
+      bullet->Render();
+    }
   }
 }
 
@@ -46,9 +45,25 @@ void BulletManager::Initialize(int bullet_num)
   }
 }
 
-void BulletManager::DeactiveBullet()
+/// <summary>
+/// 使用済みの弾を非アクティブ化し、オブジェクトプールに移動
+/// </summary>
+/// <param name="bullet_kind">弾の種類を指定</param>
+void BulletManager::DeactiveBullet(BulletKind bullet_kind)
 {
-
+  auto &playerBullets = bullet_map_[bullet_kind];
+  for (auto it = playerBullets.begin(); it != playerBullets.end(); )
+  {
+    if (!(*it)->GetIsActive())
+    {
+      inactive_bullet_map_[BulletKind::kPlayer].emplace_back(*it);
+      it = playerBullets.erase(it); // イテレーターを更新
+    }
+    else
+    {
+      ++it;
+    }
+  }
 }
 
 void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y)

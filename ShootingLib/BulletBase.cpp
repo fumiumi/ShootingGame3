@@ -40,14 +40,25 @@ int BulletBase::GetVelocity() const
   return bullet_velocity_;
 }
 
+
+bool BulletBase::GetIsFired() const
+{
+  return is_fired_;
+}
+
 void BulletBase::SetIsFired(bool is_fired)
 {
   is_fired_ = is_fired;
 }
 
-bool BulletBase::GetIsFired() const
+bool BulletBase::GetIsActive() const
 {
-  return is_fired_;
+  return is_active_;
+}
+
+void BulletBase::SetIsActive(bool is_active)
+{
+  is_active_ = is_active;
 }
 
 void BulletBase::LoadImageHandle()

@@ -33,9 +33,13 @@ public:
 
   int GetVelocity() const;
 
+  bool GetIsFired() const;
+
   void SetIsFired(bool is_fired);
 
-  bool GetIsFired() const;
+  bool GetIsActive() const;
+
+  void SetIsActive(bool is_active);
 
   virtual void LoadImageHandle() = 0;
 

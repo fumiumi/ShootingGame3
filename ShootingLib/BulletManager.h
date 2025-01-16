@@ -25,7 +25,7 @@ public:
   void Initialize(int bullet_num);
 
 
-  void DeactiveBullet();
+  void DeactiveBullet(BulletKind bullet_kind);
 
 private:
   void FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y);
