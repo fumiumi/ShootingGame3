@@ -4,7 +4,7 @@ class BulletBase
 {
 public:
   BulletBase();
-  virtual ~BulletBase();
+  virtual ~BulletBase() = default;
 
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é

@@ -12,10 +12,6 @@ BulletBase::BulletBase()
 {
 }
 
-BulletBase::~BulletBase()
-{
-}
-
 void BulletBase::Update(float delta_time)
 {
 }

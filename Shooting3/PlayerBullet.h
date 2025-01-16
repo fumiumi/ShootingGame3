@@ -13,4 +13,5 @@ public:
 
   void Fire(int x, int y) override;
 
+  // メンバ変数は基底クラスで定義済み
 };
