@@ -11,7 +11,7 @@ public:
 
   void Render() override;
 
-  void void Fire(int bullet_x, int bullet_y) override;
+  void Fire(int bullet_x, int bullet_y) override;
 
   void LoadImageHandle() override;
 

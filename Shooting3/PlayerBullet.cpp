@@ -13,8 +13,8 @@ const int kPlayerBulletVelocity = 50;
 }
 
 PlayerBullet::PlayerBullet()
-  : bullet_velocity_(kPlayerBulletVelocity)
 {
+  bullet_velocity_ = kPlayerBulletVelocity;
 }
 
 PlayerBullet::~PlayerBullet()
@@ -39,14 +39,14 @@ void PlayerBullet::Update(float delta_time)
 
 void PlayerBullet::Render()
 {
-  if (is_fired_ && bullet_handle != 0)
+  if (is_fired_ && bullet_handle_ != 0)
   {
     DrawGraph(bullet_x_, bullet_y_, bullet_handle_, TRUE);
   }
 }
 
 // BulletManagerÇ©ÇÁåƒÇ—èoÇ≥ÇÍÇÈ
-void PlayerBullet::void Fire(int bullet_x, int bullet_y)
+void PlayerBullet::Fire(int bullet_x, int bullet_y)
 {
   if (!is_fired_)
   {  

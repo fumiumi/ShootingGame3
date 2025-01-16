@@ -24,7 +24,9 @@ public:
 
   void Initialize(int bullet_num);
 
+  void AddBullet(BulletKind bullet_kind, BulletBase *bullet);
 
+  //void ActivateBullet(BulletKind bullet_kind);
   void DeactiveBullet(BulletKind bullet_kind);
 
 private:
