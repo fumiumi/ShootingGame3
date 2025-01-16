@@ -24,15 +24,17 @@ public:
   /// <param name="y"></param>
   virtual void Fire(int bullet_x, int bullet_y) = 0;
 
-  void SetX(int bullet_x);
+  // これ必要？
+  //void SetX(int bullet_x);
 
-  void SetY(int bullet_y);
+  //void SetY(int bullet_y);
 
   int GetX() const;
 
   int GetY() const;
 
-  virtual void SetVelocity(int bullet_velocity);
+  // 速度は初期化時に固定値を設定する
+  //virtual void SetVelocity(int bullet_velocity);
 
   int GetVelocity() const;
 

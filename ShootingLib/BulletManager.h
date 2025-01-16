@@ -15,7 +15,7 @@ public:
 
   BulletManager();
 
-  ~BulletManager();
+  ~BulletManager() = default;
 
   void Update(float delta_time) override;
 
@@ -23,10 +23,13 @@ public:
 
   void InitializeBullet(int bullet_num);
 
-  void FireBullet(BulletKind bullet_kind, float x, float y);
+
+  void RemoveBullet();
 
 private:
-  std::vector<BulletBase *> bullet_array_;
+  void FireBullet(BulletKind bullet_kind, int x, int y);
+
+  std::vector<BulletBase *> bullets_;
 
 
 };

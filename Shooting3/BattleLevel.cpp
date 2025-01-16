@@ -1,8 +1,7 @@
+#include "BattleLevel.h"
 #include "DxLib.h"
 #include "LevelChanger.h"
-#include "BattleLevel.h"
 #include "TaskManager.h"
-
 
 namespace
 {

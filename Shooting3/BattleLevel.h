@@ -3,6 +3,8 @@
 #include "LevelBase.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "BulletManager.h"
+
 
 class BattleLevel : public LevelBase
 {
@@ -46,6 +48,11 @@ private:
   BattleLevelState battle_level_state_;
 
   Player *player_;
+
+  /// <summary>
+  /// プレイヤー用のバレットマネージャー
+  /// </summary>
+  BulletManager *bullet_manager_;
 
   /// <summary>
   /// 背景描画をカプセル化
