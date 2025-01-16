@@ -1,5 +1,6 @@
 #include "PlayerBullet.h"
 #include "DxLib.h"
+#include "InputManager.h"
 
 namespace
 {
@@ -21,14 +22,16 @@ PlayerBullet::~PlayerBullet()
 }
 
 void PlayerBullet::Update(float delta_time)
-
+{
   // 弾の移動処理
   if (is_fired_)
   {
     bullet_y_ -= bullet_velocity_;
+
     if (bullet_y_ < 0)
     {
       is_fired_ = false;
+      is_active_ = false;
       // ハンドルの解放はBulletManagerで行う
     }
   }
@@ -42,11 +45,21 @@ void PlayerBullet::Render()
   }
 }
 
-void PlayerBullet::Fire(int center_x, int center_y)
+// BulletManagerから呼び出される
+void PlayerBullet::void Fire(int bullet_x, int bullet_y)
 {
-  bullet_x_ = center_x - kPlayerBulletWidth / 2;
-  bullet_y_ = center_y - kPlayerBulletHeight / 2;
+  if (!is_fired_)
+  {  
+  bullet_x_ = bullet_x - kPlayerBulletWidth / 2;
+  // 念の為+ bullet_velocity_
+  bullet_y_ = bullet_y - kPlayerBulletHeight / 2 + bullet_velocity_;
   is_fired_ = true;
+  }
 }
 
-// LoadとRemoveは基底クラスで定義済み
+void PlayerBullet::LoadImageHandle()
+{
+  bullet_handle_ = LoadGraph(kPlayerBulletImageFilePath);
+}
+
+// RemoveImageHandle()は共通

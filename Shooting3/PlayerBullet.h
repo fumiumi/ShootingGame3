@@ -11,7 +11,9 @@ public:
 
   void Render() override;
 
-  void Fire(int center_x, int center_y) override;
+  void void Fire(int bullet_x, int bullet_y) override;
+
+  void LoadImageHandle() override;
 
   // メンバ変数は基底クラスで定義済み
 };

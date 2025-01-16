@@ -24,11 +24,6 @@ public:
   /// <param name="y"></param>
   virtual void Fire(int bullet_x, int bullet_y) = 0;
 
-  // Ç±ÇÍïKóvÅH
-  //void SetX(int bullet_x);
-
-  //void SetY(int bullet_y);
-
   int GetX() const;
 
   int GetY() const;
@@ -42,7 +37,7 @@ public:
 
   bool GetIsFired() const;
 
-  void LoadImageHandle(const char *file_path);
+  virtual void LoadImageHandle() = 0;
 
   void RemoveImageHandle();
 
@@ -52,6 +47,8 @@ protected:
   int bullet_velocity_;
 
   bool is_fired_;
+
+  bool is_active_;
 
   int bullet_handle_;
 

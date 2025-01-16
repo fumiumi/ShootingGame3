@@ -2,6 +2,7 @@
 #include "Task.h"
 #include "BulletBase.h"
 #include <vector>
+#include <unordered_map>
 
 class BulletManager : public Task
 {
@@ -21,15 +22,16 @@ public:
 
   void Render() override;
 
-  void InitializeBullet(int bullet_num);
+  void Initialize(int bullet_num);
 
 
-  void RemoveBullet();
+  void DeactiveBullet();
 
 private:
-  void FireBullet(BulletKind bullet_kind, int x, int y);
+  void FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y);
 
-  std::vector<BulletBase *> bullets_;
-
+  using BulletContainer = std::vector<BulletBase *> ;
+  std::unordered_map<BulletKind, BulletContainer> bullet_map_;
+  std::unordered_map<BulletKind, BulletContainer> inactive_bullet_map_;
 
 };
