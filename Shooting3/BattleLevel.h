@@ -2,6 +2,7 @@
 
 #include "LevelBase.h"
 #include "Player.h"
+#include "BackGround.h"
 
 class BattleLevel : public LevelBase
 {
@@ -24,41 +25,17 @@ public:
     kPlay,
   };
 
-  /// <summary>
-  /// コンストラクタ
-  /// </summary>
-  /// 
   BattleLevel();
-
-  /// <summary>
-  /// デストラクタ
-  /// </summary>
   ~BattleLevel();
 
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <param name="delta_time"></param>
   void Update(float delta_time) override;
 
-  /// <summary>
-  /// 
-  /// </summary>
   void Render() override;
 
-  /// <summary>
-  /// 
-  /// </summary>
   void BeginLevel() override;
 
-  /// <summary>
-  /// 
-  /// </summary>
   void ReleaseLevel() override;
 
-  /// <summary>
-  /// 
-  /// </summary>
   void DestroyLevel() override;
 
 private:
@@ -68,12 +45,12 @@ private:
   /// </summary>
   BattleLevelState battle_level_state_;
 
-  /// <summary>
-  /// 背景画像
-  /// </summary>
-  int battle_bg_handle_;
-
   Player *player_;
+
+  /// <summary>
+  /// 背景描画をカプセル化
+  /// </summary>
+  BackGround *back_ground_;
 
   /// <summary>
   /// 現在の経過時間

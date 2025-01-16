@@ -11,7 +11,6 @@ namespace
 const char *kBattleBgImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Background/BaseBgSky01.png";
 
 const int kBgPosX = 200;
-
 const int kBgPosY = 0;
 
 /// <summary>
@@ -23,9 +22,9 @@ const float kChangeTitleTime = 3.0f;
 
 BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
-    battle_bg_handle_(0),
     player_(nullptr),
-    elapsed_time_(0.0f)
+    elapsed_time_(0.0f),
+    back_ground_(new BackGround)
 {
 }
 
@@ -63,16 +62,15 @@ void BattleLevel::Render()
   //x, y　　　: グラフィックを描画する領域の左上頂点の座標
   //GrHandle　 : 描画するグラフィックのハンドル
   //TransFlag　 : 画像の透明度を有効にするかどうか(TRUE：有効にする　FALSE：無効にする)
-  DrawGraph(kBgPosX, kBgPosY, battle_bg_handle_, TRUE);
-  //printfDx("handle is %d\n", battle_bg_handle_);
+  back_ground_->Render();
 }
 
 void BattleLevel::BeginLevel()
 {
   // 背景画像の読み込み
-  battle_bg_handle_ = LoadGraph(kBattleBgImageFilePath);
+  back_ground_->LoadImages();
 
-  // プレイヤーの生成
+  // プレイヤー
   player_ = new Player();
   player_->BeginPlayer();
 
@@ -93,7 +91,10 @@ void BattleLevel::ReleaseLevel()
 void BattleLevel::DestroyLevel()
 {
   // 背景画像の破棄
-  DeleteGraph(battle_bg_handle_);
+  back_ground_->RemoveImages();
+  delete back_ground_;
+  back_ground_ = nullptr;
+
   delete player_;
   player_ = nullptr;
 }
