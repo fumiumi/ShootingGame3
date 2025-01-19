@@ -88,6 +88,7 @@ void TitleLevel::BeginLevel()
 {
   //”wŒi“Ç‚Ýž‚Ý
   title_bg_handle_ = LoadGraph(kTitleBgImageFilePath);
+
   //UI‚ðƒ^ƒXƒNƒ}ƒl[ƒWƒƒ[‚É“o˜^
   TaskManager::GetInstance()->AddTask(title_ui_);
 
@@ -100,7 +101,7 @@ void TitleLevel::BeginLevel()
 /// </summary>
 void TitleLevel::ReleaseLevel()
 {
-  //¡‚Íƒ^ƒXƒNƒ}ƒl[ƒWƒƒ[‚É“o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Í‚È‚¢
+  TaskManager::GetInstance()->ReleaseTask(title_ui_->GetTaskId());
 }
 
 /// <summary>
@@ -110,4 +111,7 @@ void TitleLevel::DestroyLevel()
 {
   //”wŒi‰æ‘œ”jŠü
   DeleteGraph(title_bg_handle_);
+  title_ui_->Destroy();
+  delete title_ui_;
+  title_ui_ = nullptr;
 }

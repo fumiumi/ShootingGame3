@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "BulletManager.h"
-
+#include "BattleUi.h"
 
 class BattleLevel : public LevelBase
 {
@@ -61,8 +61,5 @@ private:
   /// </summary>
   BackGround *back_ground_;
 
-  /// <summary>
-  /// åªç›ÇÃåoâﬂéûä‘
-  /// </summary>
-  float elapsed_time_;
+  BattleUi *battle_ui_;
 };

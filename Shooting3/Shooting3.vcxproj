@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BattleLevel.cpp" />
+    <ClCompile Include="BattleUi.cpp" />
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="LevelChanger.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BattleLevel.h" />
+    <ClInclude Include="BattleUi.h" />
     <ClInclude Include="BulletManager.h" />
     <ClInclude Include="LevelChanger.h" />
     <ClInclude Include="Player.h" />

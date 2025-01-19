@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "LevelChanger.h"
 #include "TaskManager.h"
+#include "InputManager.h"
 
 namespace
 {
@@ -12,44 +13,32 @@ const char *kBattleBgImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shoot
 
 const int kBgPosX = 200;
 const int kBgPosY = 0;
-
-/// <summary>
-/// レベルの切り替え時間
-/// 画面遷移に時間を設ける
-/// </summary>
-const float kChangeTitleTime = 3.0f;
 }
 
 BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
-    player_(nullptr),
-    elapsed_time_(0.0f),
     back_ground_(new BackGround),
-    bullet_manager_(new BulletManager)
+    bullet_manager_(new BulletManager),
+    battle_ui_(new BattleUi)
 {
+  player_ = new Player(this);
 }
 
 BattleLevel::~BattleLevel() = default;
 
 void BattleLevel::Update(float delta_time)
 {
+  InputManager *input_manager = InputManager::GetInstance();
+
   // 何もしない状態なら実行しない
   if (battle_level_state_ == BattleLevelState::kNone)
   {
     return;
   }
-  // 経過時間を計算
-  // 毎フレーム加算
-  elapsed_time_ += delta_time;
 
-  // 一定時間経過したら、次の状態へ遷移
-  if (elapsed_time_ >= kChangeTitleTime)
+  //DEBUG: KEY_INPUT_ESCAPEを押したらタイトルレベルに戻る
+  if (input_manager->IsPushThisFrame(input_manager->GameKeyKind::kPause))
   {
-    // 経過時間をリセット
-    elapsed_time_ = 0.0f;
-
-    // バトルレベルの状態をリセット
-    battle_level_state_ = BattleLevelState::kNone;
 
     //レベルチェンジャーの状態をタイトルレベル終了へ
     LevelChanger::GetInstance()
@@ -72,14 +61,16 @@ void BattleLevel::BeginLevel()
   back_ground_->LoadImages();
 
   // プレイヤー
-  player_ = new Player(this);
   player_->BeginPlayer();
 
+  // 弾
   bullet_manager_->LoadBulletImageHandle();
 
   //タスクマネージャーに放り込む
   TaskManager::GetInstance()->AddTask(player_);
   TaskManager::GetInstance()->AddTask(bullet_manager_);
+  // 描画順を考慮して、UIは最後に登録
+  TaskManager::GetInstance()->AddTask(battle_ui_);
 
   // バトルレベルの状態をプレイに設定
   battle_level_state_ = BattleLevelState::kPlay;

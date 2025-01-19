@@ -48,3 +48,19 @@ void BattleUi::Render()
   //DrawGraph(game_info->GetCenterX() - kClearUiWidth / 2, 240 - kClearUiHeight / 2, clear_ui_handle_, TRUE);
   //DrawGraph(game_info->GetCenterX() - kGameOverUiWidth / 2, 240 - kGameOverUiHeight / 2, game_over_ui_handle_, TRUE);
 }
+
+void BattleUi::Destroy()
+{
+  if (side_ui_handle_ != -1)
+  {
+    DeleteGraph(side_ui_handle_);
+  }
+  if (clear_ui_handle_ != -1)
+  {
+    DeleteGraph(clear_ui_handle_);
+  }
+  if (game_over_ui_handle_ != -1)
+  {
+    DeleteGraph(game_over_ui_handle_);
+  }
+}
