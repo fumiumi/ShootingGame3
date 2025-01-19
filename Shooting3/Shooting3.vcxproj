@@ -147,6 +147,7 @@
     <ClCompile Include="BattleLevel.cpp" />
     <ClCompile Include="BattleUi.cpp" />
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="LevelChanger.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="BattleLevel.h" />
     <ClInclude Include="BattleUi.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="FadeManager.h" />
     <ClInclude Include="LevelChanger.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />

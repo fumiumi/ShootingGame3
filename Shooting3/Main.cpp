@@ -5,6 +5,7 @@
 #include "LevelChanger.h"
 #include "Player.h"
 #include "inputManager.h"
+#
 
 //メモリリーク検出のために必要
 #if defined(_WIN64) || defined(_WIN32)
