@@ -68,4 +68,5 @@ void BulletBase::LoadImageHandle()
 void BulletBase::RemoveImageHandle()
 {
   DeleteGraph(bullet_handle_);
+  bullet_handle_ = 0;
 }
