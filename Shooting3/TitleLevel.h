@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LevelBase.h"
+#include "TitleUi.h"
 
 /// <summary>
 /// タイトル画面のレベル
@@ -77,5 +78,7 @@ private:
   /// <summary>
   /// 現在の経過時間
   /// </summary>
-  float elapsed_time_;
+  //float elapsed_time_;
+
+  TitleUi *title_ui_;
 };

@@ -1,8 +1,9 @@
 #include "DxLib.h"
-#include <TaskManager.h>
+#include "TaskManager.h"
 #include "LevelChanger.h"
 #include "TitleLevel.h"
 #include "BattleLevel.h"
+#include "GameInfo.h"
 
 //レベルチェンジャーのインスタンス初期化
 LevelChanger *LevelChanger::instance_ = nullptr;
@@ -19,7 +20,12 @@ LevelChanger::~LevelChanger() = default;
 void LevelChanger::SetLevelChangerState(LevelChanger::LevelChangerState level_changer_state)
 {
   //DEBUG
-  printfDx("レベルチェンジ\n");
+  GameInfo *game_info = GameInfo::GetInstance();
+  if (game_info->IsDebugDisplay())
+  {
+    printfDx("レベルチェンジ\n");
+  }
+
   current_level_changer_state_ = level_changer_state;
 }
 
@@ -88,6 +94,7 @@ void LevelChanger::Update(float delta_time) {
     TaskManager::GetInstance()->AddTask(current_level_);
 
     //レベルの開始処理
+    // BeginLevel()内でUIの登録なども行う
     current_level_->BeginLevel();
 
     //レベルチェンジャーの状態は待機へ

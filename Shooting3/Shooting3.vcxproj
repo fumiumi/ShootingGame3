@@ -151,6 +151,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="TitleLevel.cpp" />
+    <ClCompile Include="TitleUi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShootingLib\ShootingLib.vcxproj">
@@ -165,6 +166,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="TitleLevel.h" />
+    <ClInclude Include="TitleUi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
