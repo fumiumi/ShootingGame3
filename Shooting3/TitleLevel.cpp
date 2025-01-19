@@ -3,6 +3,7 @@
 #include "LevelChanger.h"
 #include "TitleUi.h"
 #include "InputManager.h"
+#include "FadeManager.h"
 
 
 /// <summary>
@@ -64,6 +65,9 @@ void TitleLevel::Update(float delta_time)
     //レベルチェンジャーの状態をタイトルレベル終了へ
     LevelChanger::GetInstance()
       ->SetLevelChangerState(LevelChanger::LevelChangerState::kFinTitleLevel);
+
+    // フェードインをリクエスト
+    FadeManager::GetInstance()->RequestFadeIO(1000, FadeManager::FadeManagerState::kFadeIn);
   }
 }
 
@@ -94,6 +98,9 @@ void TitleLevel::BeginLevel()
 
   //状態を通常へ
   title_level_state_ = TitleLevelState::kPlay;
+
+  // フェードアウトをリクエスト
+  FadeManager::GetInstance()->RequestFadeIO(1000, FadeManager::FadeManagerState::kFadeOut);
 }
 
 /// <summary>

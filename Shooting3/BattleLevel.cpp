@@ -3,6 +3,7 @@
 #include "LevelChanger.h"
 #include "TaskManager.h"
 #include "InputManager.h"
+#include "FadeManager.h"
 
 namespace
 {
@@ -43,6 +44,9 @@ void BattleLevel::Update(float delta_time)
     //レベルチェンジャーの状態をタイトルレベル終了へ
     LevelChanger::GetInstance()
       ->SetLevelChangerState(LevelChanger::LevelChangerState::kFinBattleLevel);
+
+    // フェードインをリクエスト
+    FadeManager::GetInstance()->RequestFadeIO(2000, FadeManager::FadeManagerState::kFadeIn);
   }
 }
 
@@ -75,6 +79,9 @@ void BattleLevel::BeginLevel()
   // バトルレベルの状態をプレイに設定
   battle_level_state_ = BattleLevelState::kPlay;
   //=> Updateが動くようになる
+
+  // フェードアウトをリクエスト
+  FadeManager::GetInstance()->RequestFadeIO(300, FadeManager::FadeManagerState::kFadeOut);
 }
 
 void BattleLevel::ReleaseLevel()

@@ -7,6 +7,13 @@
 class FadeManager
 {
 public:
+  enum class FadeManagerState
+  {
+    kFadeIn,
+    kFadeOut,
+    kNone
+  };
+
   static FadeManager *GetInstance()
   {
     //生成されてないなら動的生成
@@ -29,25 +36,25 @@ public:
   }
 
   /// <summary>
-  /// インプットマネージャーにフェードインタスクを登録
+  /// クライアントがFadeManagerにフェードイン/アウトを依頼する関数
   /// </summary>
-  /// <param name="duration"></param>
-  void FadeIn(float duration);
+  /// <param name="duration">ミリ秒</param>
+  void RequestFadeIO(float duration, FadeManagerState mode);
 
-  /// <summary>
-  /// インプットマネージャーにフェードアウトタスクを登録
-  /// </summary>
-  /// <param name="duration"></param>
-  void FadeOut(float duration);
+  void RenderFade(float delta_time);
 
-  void Update(float delta_time);
-  void Render();
+  bool IsRequested() const;
 
 private:
   FadeManager();
   ~FadeManager() = default;
   static FadeManager *instance_;
 
+  FadeManagerState fade_manager_state_;
+  float duration_;
   float fade_alpha_;
 
+  bool is_requested_;
+
+  int fade_handle_;
 };
