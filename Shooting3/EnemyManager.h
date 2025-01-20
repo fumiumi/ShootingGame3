@@ -6,9 +6,8 @@
 
 struct EnemyPattern
 {
-  float appear_time_sec;
+  int elapsed_time;
   int enemy_num;
-  int allgnment_pattern;
 };
 
 class EnemyManager : public Task
@@ -16,7 +15,6 @@ class EnemyManager : public Task
 public:
   EnemyManager();
   ~EnemyManager() = default;
-
 
   void Update(float delta_time) override;
   void Render() override;
@@ -29,10 +27,15 @@ public:
 
   void LoadEnemyImageHandle();
 
+  int GetRandomEnemyPosX();
+
 private:
   std::vector<EnemyBase *> enemy_list_;
-  EnemyBase *boss_enemy;
+  EnemyBase *boss_enemy_;
 
-  float plaly_time_;
+  std::vector<EnemyPattern *> enemy_pattarns_;
+
+  float play_time_;
+  float last_enemy_apper_time_;
 
 };

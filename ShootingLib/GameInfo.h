@@ -35,8 +35,14 @@ public:
 	int GetCenterX();
 	int GetCenterY();
 
+  int GetMinPosX();
+  int GetMaxPosX();
+
   int GetPlayerImageWidth();
   int GetPlayerImageHeight();
+
+  int GetTackleEnemyImageWidth();
+  int GetTackleEnemyImageHeight();
 
 	int GetColorBit();
 
@@ -69,4 +75,5 @@ private:
 	bool is_debug_display_;
 
 	bool is_end_game_;
+
 };

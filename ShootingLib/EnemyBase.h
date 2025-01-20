@@ -3,6 +3,8 @@
 class EnemyBase
 {
 public:
+  friend class EnemyManager;
+
   EnemyBase();
 
   virtual ~EnemyBase() = default;
@@ -24,11 +26,21 @@ public:
   int GetVelocityX() const;
   int GetVelocityY() const;
 
+  bool GetIsDead() const;
+  void SetIsDead(bool is_dead);
+
+  bool GetIsActive() const;
+  void SetIsActive(bool is_active);
+
+  void CorrectPosX();
+
 protected:
   int pos_x_;
   int pos_y_;
   int velocity_x_;
   int velocity_y_;
+
+  bool is_active_;
 
   bool is_dead_;
 

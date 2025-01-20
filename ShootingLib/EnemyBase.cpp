@@ -1,12 +1,13 @@
 #include "EnemyBase.h"
 #include "DXLib.h"
+#include "GameInfo.h"
 
 EnemyBase::EnemyBase()
   : pos_x_(0),
     pos_y_(0),
     velocity_x_(0),
     velocity_y_(0),
-    is_dead_(false),
+    is_dead_(true),
     enemy_handle_(0)
 {
 }
@@ -60,4 +61,38 @@ int EnemyBase::GetVelocityX() const
 int EnemyBase::GetVelocityY() const
 {
   return velocity_y_;
+}
+
+bool EnemyBase::GetIsActive() const
+{
+  return is_active_;
+}
+
+void EnemyBase::SetIsActive(bool is_active)
+{
+  is_active_ = is_active;
+}
+
+bool EnemyBase::GetIsDead() const
+{
+  return is_dead_;
+}
+
+void EnemyBase::SetIsDead(bool is_dead)
+{
+  is_dead_ = is_dead;
+}
+
+void EnemyBase::CorrectPosX()
+{
+  GameInfo *game_info = GameInfo::GetInstance();
+
+  if (pos_x_ <= game_info->GetMinPosX())
+  {
+    pos_x_ = game_info->GetMinPosX();
+  }
+  else if (pos_x_ >= game_info->GetMaxPosX())
+  {
+    pos_x_ = game_info->GetMaxPosX() - game_info->GetTackleEnemyImageWidth();
+  }
 }

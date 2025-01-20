@@ -6,8 +6,12 @@ int kWidth = 1280;
 int kHeight = 720;
 int kColorBit = 32;
 
-int kPlayerImageWidth = 64;
-int kPlayerImageHeight = 64;
+const int kSideUiWidth = 200;
+
+const int kPlayerImageWidth = 64;
+const int kPlayerImageHeight = 64;
+const int kTackleEnemyWidth = 64;
+const int kTackleEnemyHeight = 64;
 }
 
 GameInfo *GameInfo::instance_ = nullptr;
@@ -43,6 +47,16 @@ int GameInfo::GetCenterY()
   return y_center_;
 }
 
+int GameInfo::GetMinPosX()
+{
+  return kSideUiWidth;
+}
+
+int GameInfo::GetMaxPosX()
+{
+  return kWidth - kSideUiWidth;
+}
+
 int GameInfo::GetPlayerImageWidth()
 {
   return kPlayerImageWidth;
@@ -51,6 +65,16 @@ int GameInfo::GetPlayerImageWidth()
 int GameInfo::GetPlayerImageHeight()
 {
   return kPlayerImageHeight;
+}
+
+int GameInfo::GetTackleEnemyImageWidth()
+{
+  return kTackleEnemyWidth;
+}
+
+int GameInfo::GetTackleEnemyImageHeight()
+{
+  return kTackleEnemyHeight;
 }
 
 int GameInfo::GetColorBit()

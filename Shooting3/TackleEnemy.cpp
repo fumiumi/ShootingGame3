@@ -6,6 +6,8 @@ namespace
 {
 const char *kTackleEnemyImageFilePath = "E:/ゲーム開発/クリアカ/ShootingGame3/Shooting3/Assets/Image/Battle/Enemy/TackleEnemy.png";
 const int kTackleEnemyVelocity = 10;
+
+
 }
 
 TackleEnemy::TackleEnemy()
@@ -33,6 +35,7 @@ void TackleEnemy::Update(float delta_time)
   if (pos_y_ >= game_info->GetResolutionY())
   {
     is_dead_ = true;
+    is_active_ = false;
   }
 }
 
