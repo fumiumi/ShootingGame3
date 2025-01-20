@@ -3,8 +3,6 @@
 
 class BulletBase
 {
-friend class Player;
-
 public:
   BulletBase();
   virtual ~BulletBase() = default;
@@ -27,26 +25,24 @@ public:
   /// <param name="y"></param>
   virtual void Fire(int bullet_x, int bullet_y) = 0;
 
-  int GetX() const;
-
-  int GetY() const;
-
-  // ‘¬“x‚Í‰Šú‰»‚ÉŒÅ’è’l‚ğİ’è‚·‚é
-  //virtual void SetVelocity(int bullet_velocity);
-
-  int GetVelocity() const;
-
-  bool GetIsFired() const;
-
-  void SetIsFired(bool is_fired);
-
-  bool GetIsActive() const;
-
-  void SetIsActive(bool is_active);
-
   virtual void LoadImageHandle();
 
   void RemoveImageHandle();
+
+  void SetPosX(int bullet_x);
+  void SetPosY(int bullet_y);
+  void SetVelocity(int bullet_velocity);
+
+  int GetPosX() const;
+  int GetPosY() const;
+  int GetVelocity() const;
+
+  void SetIsFired(bool is_fired);
+  void SetIsActive(bool is_active);
+
+  bool GetIsFired() const;
+  bool GetIsActive() const;
+
 
 protected:
   int bullet_x_;
@@ -58,5 +54,4 @@ protected:
   bool is_active_;
 
   int bullet_handle_;
-
 };
