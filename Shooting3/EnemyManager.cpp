@@ -70,7 +70,7 @@ void EnemyManager::LoadEnemyImageHandle()
 {
   for (auto enemy : enemy_list_)
   {
-    enemy->LoadImage();
+    enemy->LoadImageHandle();
   }
-  boss_enemy->LoadImage();
+  boss_enemy->LoadImageHandle();
 }

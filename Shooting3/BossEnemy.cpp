@@ -23,7 +23,7 @@ void BossEnemy::Render()
 {
 }
 
-void BossEnemy::LoadImage()
+void BossEnemy::LoadImageHandle()
 {
-  enemy_handle = LoadGraph(kBossEnemyImageFilePath);
+  enemy_handle_ = LoadGraph(kBossEnemyImageFilePath);
 }

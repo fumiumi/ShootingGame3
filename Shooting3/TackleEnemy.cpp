@@ -46,7 +46,7 @@ void TackleEnemy::Render()
   DrawGraph(pos_x_, pos_y_, enemy_handle_, TRUE);
 }
 
-void TackleEnemy::LoadImage()
+void TackleEnemy::LoadImageHandle()
 {
   enemy_handle_ = LoadGraph(kTackleEnemyImageFilePath);
 }
