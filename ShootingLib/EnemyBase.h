@@ -4,12 +4,14 @@ class EnemyBase
 {
 public:
   EnemyBase();
-  virtual ~EnemyBase();
+
+  virtual ~EnemyBase() = default;
 
   virtual void Update(float delta_time);
-  virtual void Render() = 0;
 
-  virtual void LoadImage() = 0;
+  virtual void Render();
+
+  virtual void LoadImageHandle();
 
   void RemoveImageHandle();
 
@@ -30,5 +32,5 @@ protected:
 
   bool is_dead_;
 
-  int image_handle_;
+  int enemy_handle_;
 };

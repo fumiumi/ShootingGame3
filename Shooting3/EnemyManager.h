@@ -4,11 +4,19 @@
 #include "EnemyBase.h"
 #include <vector>
 
+struct EnemyPattern
+{
+  float appear_time_sec;
+  int enemy_num;
+  int allgnment_pattern;
+};
+
 class EnemyManager : public Task
 {
 public:
   EnemyManager();
   ~EnemyManager() = default;
+
 
   void Update(float delta_time) override;
   void Render() override;

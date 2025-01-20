@@ -5,11 +5,11 @@
 // Šî’êƒNƒ‰ƒX‘¤‚Å‚à‚¤ƒƒ“ƒo•Ï”‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
 BulletBase::BulletBase()
   : bullet_x_(0),
-  bullet_y_(0),
-  bullet_velocity_(0),
-  is_fired_(false),
-  is_active_(true),
-  bullet_handle_(0)
+    bullet_y_(0),
+    bullet_velocity_(0),
+    is_fired_(false),
+    is_active_(true),
+    bullet_handle_(0)
 {
 }
 

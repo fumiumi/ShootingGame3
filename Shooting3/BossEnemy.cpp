@@ -25,5 +25,5 @@ void BossEnemy::Render()
 
 void BossEnemy::LoadImage()
 {
-  image_handle_ = LoadGraph(kBossEnemyImageFilePath);
+  enemy_handle = LoadGraph(kBossEnemyImageFilePath);
 }

@@ -7,11 +7,7 @@ EnemyBase::EnemyBase()
     velocity_x_(0),
     velocity_y_(0),
     is_dead_(false),
-    image_handle_(0)
-{
-}
-
-EnemyBase::~EnemyBase()
+    enemy_handle_(0)
 {
 }
 
@@ -19,12 +15,20 @@ void EnemyBase::Update(float delta_time)
 {
 }
 
+void EnemyBase::Render()
+{
+}
+
+void EnemyBase::LoadImageHandle()
+{
+}
+
 void EnemyBase::RemoveImageHandle()
 {
-  if (image_handle_ != 0)
+  if (enemy_handle_ != 0)
   {
-    DeleteGraph(image_handle_);
-    image_handle_ = 0;
+    DeleteGraph(enemy_handle_);
+    enemy_handle_ = 0;
   }
 }
 

@@ -1,10 +1,10 @@
 #pragma once
 
-
 class BulletBase
 {
 public:
   BulletBase();
+
   virtual ~BulletBase() = default;
 
   /// <summary>
@@ -16,14 +16,14 @@ public:
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
   /// </summary>
-  virtual void Render() = 0;
+  virtual void Render();
 
   /// <summary>
   /// BulletManager‚©‚çŒÄ‚Ño‚³‚ê‚é
   /// </summary>
   /// <param name="x"></param>
   /// <param name="y"></param>
-  virtual void Fire(int bullet_x, int bullet_y) = 0;
+  virtual void Fire(int bullet_x, int bullet_y);
 
   virtual void LoadImageHandle();
 

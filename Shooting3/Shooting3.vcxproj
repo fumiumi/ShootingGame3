@@ -148,7 +148,6 @@
     <ClCompile Include="BattleUi.cpp" />
     <ClCompile Include="BossBullet.cpp" />
     <ClCompile Include="BossEnemy.cpp" />
-    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="LevelChanger.cpp" />
