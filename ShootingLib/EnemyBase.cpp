@@ -8,6 +8,7 @@ EnemyBase::EnemyBase()
     velocity_x_(0),
     velocity_y_(0),
     is_dead_(true),
+    is_active_(false),
     enemy_handle_(0)
 {
 }

@@ -72,7 +72,11 @@ void BattleLevel::BeginLevel()
   // 弾
   bullet_manager_->LoadBulletImageHandle();
 
+  // 敵
+  enemy_manager_->LoadEnemyImageHandle();
+
   //タスクマネージャーに放り込む
+  TaskManager::GetInstance()->AddTask(enemy_manager_);
   TaskManager::GetInstance()->AddTask(player_);
   TaskManager::GetInstance()->AddTask(bullet_manager_);
   // 描画順を考慮して、UIは最後に登録

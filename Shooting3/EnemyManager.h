@@ -38,4 +38,6 @@ private:
   float play_time_;
   float last_enemy_apper_time_;
 
+  int level_step_;
+
 };
