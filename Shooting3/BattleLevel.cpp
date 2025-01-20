@@ -4,6 +4,7 @@
 #include "TaskManager.h"
 #include "InputManager.h"
 #include "FadeManager.h"
+#include "GameInfo.h"
 
 namespace
 {
@@ -18,8 +19,9 @@ const int kBgPosY = 0;
 
 BattleLevel::BattleLevel()
   : battle_level_state_(BattleLevelState::kNone),
-    back_ground_(new BackGround),
     bullet_manager_(new BulletManager),
+    enemy_manager_(new EnemyManager),
+    back_ground_(new BackGround),
     battle_ui_(new BattleUi)
 {
   player_ = new Player(this);

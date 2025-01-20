@@ -20,7 +20,7 @@ void BulletManager::Update(float delta_time)
     auto &bullets = bullet_list_map_[bullet_kind];
     for (auto &bullet : bullets)
     {
-      bullets.Update(delta_time);
+      bullet->Update(delta_time);
     }
   }
 }
@@ -32,7 +32,7 @@ void BulletManager::Render()
     auto &bullets = bullet_list_map_[bullet_kind];
     for (auto &bullet : bullets)
     {
-      bullet.Render();
+      bullet->Render();
     }
   }
 }
@@ -59,9 +59,9 @@ void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_
   auto &bullets = bullet_list_map_[bullet_kind];
   for (auto &bullet : bullets)
   {
-    if (!bullet.GetIsFired())
+    if (!bullet->GetIsFired())
     {
-      bullet.Fire(bullet_x, bullet_y);
+      bullet->Fire(bullet_x, bullet_y);
       return;
     }
   }
@@ -88,7 +88,7 @@ void BulletManager::LoadBulletImageHandle()
 
     for (auto &bullet : bullets) 
     {
-      bullet.LoadImageHandle();
+      bullet->LoadImageHandle();
     }
   }
 }

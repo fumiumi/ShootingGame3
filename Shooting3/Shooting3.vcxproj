@@ -169,7 +169,6 @@
     <ClInclude Include="BattleUi.h" />
     <ClInclude Include="BossBullet.h" />
     <ClInclude Include="BossEnemy.h" />
-    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="LevelChanger.h" />
