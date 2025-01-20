@@ -16,28 +16,23 @@ public:
   };
 
   BulletManager();
-
   ~BulletManager() = default;
 
   void Update(float delta_time) override;
-
   void Render() override;
   
-  void Initialize(int bullet_num);
+  void Initialize(int player_bullet_num, int enemy_bullet_num);
 
   void FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y);
 
   void AddBullet(BulletKind bullet_kind, BulletBase *bullet);
 
-  //void ActivateBullet(BulletKind bullet_kind);
-  void DeactiveBullet(BulletKind bullet_kind);
+  void Destroy();
 
   void LoadBulletImageHandle();
 
 private:
-
-  using BulletContainer = std::vector<BulletBase *> ;
-  std::unordered_map<BulletKind, BulletContainer> bullet_map_;
-  std::unordered_map<BulletKind, BulletContainer> inactive_bullet_map_;
+  using BulletList = std::vector<BulletBase *>;
+  std::unordered_map<BulletKind, BulletList> bullet_list_map_;
 
 };

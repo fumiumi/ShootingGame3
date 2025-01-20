@@ -16,11 +16,15 @@ public:
   void Initialize(int enemy_num);
 
   void AddEnemy(EnemyBase *enemy);
-  void RemoveEnemy(EnemyBase *enemy);
+  
+  void Destroy();
 
   void LoadEnemyImageHandle();
 
 private:
   std::vector<EnemyBase *> enemy_list_;
   EnemyBase *boss_enemy;
+
+  float plaly_time_;
+
 };

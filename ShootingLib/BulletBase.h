@@ -44,7 +44,7 @@ public:
 
   void SetIsActive(bool is_active);
 
-  virtual void LoadImageHandle() = 0;
+  virtual void LoadImageHandle();
 
   void RemoveImageHandle();
 

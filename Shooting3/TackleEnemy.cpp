@@ -16,10 +16,15 @@ TackleEnemy::~TackleEnemy()
 
 void TackleEnemy::Update(float delta_time)
 {
+  if (pos_y >= 720)
+  {
+    is_dead_ = true;
+  }
 }
 
 void TackleEnemy::Render()
 {
+  DrawGraph(pos_x_, pos_y_, image_handle_, TRUE);
 }
 
 void TackleEnemy::LoadImage()

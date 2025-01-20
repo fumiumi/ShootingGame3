@@ -1,27 +1,26 @@
 #include "BulletManager.h"
 #include "DxLib.h"
-#include "PlayerBullet.h"
 #include <vector>
-#include <unordered_map>
-
 
 namespace
 {
-const int kInitialBulletNum = 30;
+const int kInitialPlayerBulletNum = 30;
+const int kInitialEnemyBulletNum = 30;
 }
 
 BulletManager::BulletManager()
 {
-  Initialize(kInitialBulletNum);
+  Initialize(kInitialPlayerBulletNum, kInitialEnemyBulletNum);
 }
 
 void BulletManager::Update(float delta_time)
 {
   for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy })
   {
-    for (auto bullet : bullet_map_[bullet_kind])
+    auto &bullets = bullet_list_map_[bullet_kind];
+    for (auto &bullet : bullets)
     {
-      bullet->Update(delta_time);
+      bullets.Update(delta_time);
     }
   }
 }
@@ -30,33 +29,39 @@ void BulletManager::Render()
 {
   for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy })
   {
-    for (auto bullet : bullet_map_[bullet_kind])
+    auto &bullets = bullet_list_map_[bullet_kind];
+    for (auto &bullet : bullets)
     {
-      bullet->Render();
+      bullet.Render();
     }
   }
 }
 
-void BulletManager::Initialize(int bullet_num)
+void BulletManager::Initialize(int player_bullet_num, int enemy_bullet_num)
 {
-  for (int i = 0; i < bullet_num; i++)
+  for (int i = 0; i < player_bullet_num; i++)
   {
-    bullet_map_[BulletKind::kPlayer].emplace_back(new PlayerBullet);
+    AddBullet(BulletKind::kPlayer, new BulletBase);
+  }
+  for (int i = 0; i < enemy_bullet_num; i++)
+  {
+    AddBullet(BulletKind::kEnemy, new BulletBase);
   }
 }
 
 void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_y)
 {
-  if (bullet_map_[bullet_kind].empty())
+  if (bullet_list_map_[bullet_kind].empty())
   {
     return;
   }
 
-  for (auto bullet : bullet_map_[bullet_kind])
+  auto &bullets = bullet_list_map_[bullet_kind];
+  for (auto &bullet : bullets)
   {
-    if (!bullet->GetIsFired())
+    if (!bullet.GetIsFired())
     {
-      bullet->Fire(bullet_x, bullet_y);
+      bullet.Fire(bullet_x, bullet_y);
       return;
     }
   }
@@ -64,56 +69,26 @@ void BulletManager::FireBullet(BulletKind bullet_kind, int bullet_x, int bullet_
 
 void BulletManager::AddBullet(BulletKind bullet_kind, BulletBase *bullet)
 {
-  bullet_map_[bullet_kind].emplace_back(bullet);
+  bullet_list_map_[bullet_kind].emplace_back(bullet);
 }
 
-
-//XXX: 謎のエラーが出たので実装は保留
-//void BulletManager::ActivateBullet(BulletKind bullet_kind)
-//{
-//  auto &inactive_bullet_map = inactive_bullet_map_[bullet_kind];
-//
-//  if (inactive_bullet_map.empty())
-//  {
-//    AddBullet(bullet_kind, new PlayerBullet);
-//  }
-//
-//  auto first = inactive_bullet_map.begin();
-//  (*first)->SetIsFired(false);
-//  (*first)->SetIsActive(true);
-//  bullet_map_[bullet_kind].emplace_back((*first));
-//  inactive_bullet_map.erase(first);
-//}
-
-
-/// <summary>
-/// 使用済みの弾を非アクティブ化し、オブジェクトプールに移動
-/// </summary>
-/// <param name="bullet_kind">弾の種類を指定</param>
-void BulletManager::DeactiveBullet(BulletKind bullet_kind)
+void BulletManager::Destroy()
 {
-  auto &bullet_map = bullet_map_[bullet_kind];
-  for (auto it = bullet_map.begin(); it != bullet_map.end();)
+  for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy })
   {
-    if (!(*it)->GetIsActive())
-    {
-      inactive_bullet_map_[BulletKind::kPlayer].emplace_back(*it);
-      it = bullet_map.erase(it); // イテレーターを更新
-    }
-    else
-    {
-      ++it;
-    }
+    bullet_list_map_[bullet_kind].clear();
   }
 }
 
 void BulletManager::LoadBulletImageHandle()
 {
-  for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy })
+  for (const auto &bullet_kind : { BulletKind::kPlayer, BulletKind::kEnemy }) 
   {
-    for (auto bullet : bullet_map_[bullet_kind])
+    auto &bullets = bullet_list_map_[bullet_kind];
+
+    for (auto &bullet : bullets) 
     {
-      bullet->LoadImageHandle();
+      bullet.LoadImageHandle();
     }
   }
 }

@@ -149,7 +149,6 @@
     <ClCompile Include="BossBullet.cpp" />
     <ClCompile Include="BossEnemy.cpp" />
     <ClCompile Include="BulletManager.cpp" />
-    <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="LevelChanger.cpp" />
@@ -172,7 +171,6 @@
     <ClInclude Include="BossBullet.h" />
     <ClInclude Include="BossEnemy.h" />
     <ClInclude Include="BulletManager.h" />
-    <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="LevelChanger.h" />

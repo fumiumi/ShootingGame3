@@ -19,13 +19,6 @@ void EnemyBase::Update(float delta_time)
 {
 }
 
-void EnemyBase::Render()
-{
-}
-
-void EnemyBase::LoadImage()
-{
-}
 
 void EnemyBase::RemoveImageHandle()
 {

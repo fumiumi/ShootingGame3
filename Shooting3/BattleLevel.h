@@ -5,6 +5,7 @@
 #include "BackGround.h"
 #include "BulletManager.h"
 #include "BattleUi.h"
+#include "EnemyManager.h"
 
 class BattleLevel : public LevelBase
 {
@@ -55,6 +56,8 @@ private:
   /// プレイヤー用のバレットマネージャー
   /// </summary>
   BulletManager *bullet_manager_;
+
+  EnemyManager *enemy_manager_;
 
   /// <summary>
   /// 背景描画をカプセル化
