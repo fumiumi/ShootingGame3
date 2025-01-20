@@ -74,6 +74,10 @@ void BattleLevel::BeginLevel()
 
   // 敵
   enemy_manager_->LoadEnemyImageHandle();
+  //for (auto enemy : enemy_manager_->GetEnemyList())
+  //{
+  //  enemy->GetBulletList(bullet_manager_->GetBulletList());
+  //}
 
   //タスクマネージャーに放り込む
   TaskManager::GetInstance()->AddTask(enemy_manager_);

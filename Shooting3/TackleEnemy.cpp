@@ -1,6 +1,7 @@
 #include "TackleEnemy.h"
 #include "DXLib.h"
 #include "GameInfo.h"
+#include "BulletManager.h"
 
 namespace
 {
@@ -53,5 +54,31 @@ void TackleEnemy::LoadImageHandle()
 {
   enemy_handle_ = LoadGraph(kTackleEnemyImageFilePath);
 }
+
+void TackleEnemy::GetBulletManager(BulletManager *bullet_manager)
+{
+  bullet_manager_ = bullet_manager;
+}
+
+void TackleEnemy::CheckHitBullet()
+{
+  //if (is_dead_ || bullet_manager_ == nullptr)
+  //{
+  //  return;
+  //}
+
+  //auto &bullets = bullet_manager_->bullet_list_map_[BulletManager::BulletKind::kPlayer];
+  //for (auto &bullet : bullets)
+  //{
+  //  if (CheckHitKeyPoint(pos_x_, pos_y_, bullet->GetPosX(), bullet->GetPosY(), enemy_handle_, bullet->GetBulletHandle()))
+  //  {
+  //    is_dead_ = true;
+  //    is_active_ = false;
+  //    bullet->SetIsActive(false);
+  //  }
+  //}
+}
+
+
 
 // ハンドルの解放は基底クラスで実装済み

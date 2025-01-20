@@ -27,13 +27,11 @@ public:
 
   void LoadEnemyImageHandle();
 
-  int GetRandomEnemyPosX();
+  std::vector<EnemyBase *> &GetEnemyList() { return enemy_list_; }
 
 private:
   std::vector<EnemyBase *> enemy_list_;
   EnemyBase *boss_enemy_;
-
-  std::vector<EnemyPattern *> enemy_pattarns_;
 
   float play_time_;
   float last_enemy_apper_time_;

@@ -25,6 +25,14 @@ void EnemyBase::LoadImageHandle()
 {
 }
 
+void EnemyBase::GetBulletList(std::vector<BulletBase *> &bullet_list)
+{
+}
+
+void EnemyBase::CheckHitBullet()
+{
+}
+
 void EnemyBase::RemoveImageHandle()
 {
   if (enemy_handle_ != 0)

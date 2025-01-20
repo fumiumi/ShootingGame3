@@ -3,8 +3,7 @@
 #include "BossEnemy.h"
 #include "GameInfo.h"
 #include "DXLib.h"
-#include <vector>
-#include <random>
+#include <vector> 
 
 namespace
 {
@@ -87,7 +86,7 @@ void EnemyManager::Update(float delta_time)
         }
         if (enemy->is_dead_ && !enemy->is_active_)
         {
-          enemy->pos_x_ = GetRandomEnemyPosX();
+          enemy->pos_x_ = GetRand(game_info->GetMaxPosX()) + game_info->GetMinPosX();
           enemy->CorrectPosX();
           enemy->pos_y_ = -(game_info->GetTackleEnemyImageHeight() * (count + 1));
           enemy->is_dead_ = false;
@@ -111,7 +110,7 @@ void EnemyManager::Update(float delta_time)
         }
         if (enemy->is_dead_ && !enemy->is_active_)
         {
-          enemy->pos_x_ = GetRandomEnemyPosX();
+          enemy->pos_x_ = GetRand(game_info->GetMaxPosX()) + game_info->GetMinPosX();
           enemy->CorrectPosX();
           enemy->pos_y_ = -(game_info->GetTackleEnemyImageHeight() * (count + 1));
           enemy->is_dead_ = false;
@@ -135,7 +134,7 @@ void EnemyManager::Update(float delta_time)
         }
         if (enemy->is_dead_ && !enemy->is_active_)
         {
-          enemy->pos_x_ = GetRandomEnemyPosX();
+          enemy->pos_x_ = GetRand(game_info->GetMaxPosX()) + game_info->GetMinPosX();
           enemy->CorrectPosX();
           enemy->pos_y_ = -(game_info->GetTackleEnemyImageHeight() * (count + 1));
           enemy->is_dead_ = false;
@@ -233,12 +232,4 @@ void EnemyManager::LoadEnemyImageHandle()
     enemy->LoadImageHandle();
   }
   boss_enemy_->LoadImageHandle();
-}
-
-//XXX: –ˆ‰ñ“¯‚¶’l‚ª•Ô‚Á‚Ä‚­‚é
-int EnemyManager::GetRandomEnemyPosX()
-{
-  std::mt19937_64 mt(0);
-  std::uniform_int_distribution<int> rand_x(3, 16);
-  return rand_x(mt);
 }

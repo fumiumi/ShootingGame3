@@ -1,4 +1,6 @@
 #pragma once
+#include "BulletBase.h"
+#include <vector>
 
 class EnemyBase
 {
@@ -14,6 +16,10 @@ public:
   virtual void Render();
 
   virtual void LoadImageHandle();
+
+  virtual void GetBulletList(std::vector<BulletBase *> &bullet_list);
+
+  virtual void CheckHitBullet();
 
   void RemoveImageHandle();
 
@@ -45,4 +51,6 @@ protected:
   bool is_dead_;
 
   int enemy_handle_;
+
+  std::vector<BulletBase *> bullet_list_;
 };

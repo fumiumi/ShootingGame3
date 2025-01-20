@@ -6,6 +6,7 @@
 
 class BulletManager : public Task
 {
+  friend class TackleEnemy;
 
 public:
   enum class BulletKind
