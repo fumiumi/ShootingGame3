@@ -1,6 +1,7 @@
 #include "EnemyBase.h"
 #include "DXLib.h"
 #include "GameInfo.h"
+#include "BulletManager.h"
 
 EnemyBase::EnemyBase()
   : pos_x_(0),
@@ -10,7 +11,8 @@ EnemyBase::EnemyBase()
     is_dead_(true),
     is_active_(false),
     enemy_handle_(0),
-    bullet_manager_(nullptr)
+    bullet_manager_(nullptr),
+    bullet_kind_(BulletManager::BulletKind::kEnemy)
 {
 }
 
@@ -26,11 +28,11 @@ void EnemyBase::LoadImageHandle()
 {
 }
 
-void EnemyBase::GetBulletList(std::vector<BulletBase *> &bullet_list)
+void EnemyBase::CheckHitBullet()
 {
 }
 
-void EnemyBase::CheckHitBullet()
+void EnemyBase::SetBulletKind(BulletManager::BulletKind bullet_kind)
 {
 }
 
@@ -47,6 +49,7 @@ void EnemyBase::SetBulletManager(BulletManager *bullet_manager)
 {
   bullet_manager_ = bullet_manager;
 }
+
 
 void EnemyBase::SetPosX(int pos_x)
 {

@@ -18,13 +18,14 @@ public:
 
   virtual void LoadImageHandle();
 
-  virtual void GetBulletList(std::vector<BulletBase *> &bullet_list);
-
   virtual void CheckHitBullet();
+  
+  virtual void SetBulletKind(BulletManager::BulletKind bullet_kind);
 
   void RemoveImageHandle();
 
   void SetBulletManager(BulletManager *bullet_manager);
+
 
   void SetPosX(int pos_x);
   void SetPosY(int pos_y);
@@ -57,4 +58,5 @@ protected:
   int enemy_handle_;
 
   BulletManager *bullet_manager_;
+  BulletManager::BulletKind bullet_kind_;
 };

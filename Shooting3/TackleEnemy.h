@@ -1,6 +1,7 @@
 #pragma once
 #include "EnemyBase.h"
 #include "BulletManager.h"
+#include "BulletManager.h"
 
 class TackleEnemy : public EnemyBase
 {
@@ -15,7 +16,7 @@ public:
 
   void LoadImageHandle() override;
 
-  void GetBulletList(std::vector<BulletBase *> &bullet_list) override;
+  void SetBulletKind(BulletManager::BulletKind bullet_kind) override;
 
   void CheckHitBullet() override;
 
