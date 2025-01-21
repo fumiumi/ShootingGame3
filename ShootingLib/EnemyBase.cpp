@@ -9,7 +9,8 @@ EnemyBase::EnemyBase()
     velocity_y_(0),
     is_dead_(true),
     is_active_(false),
-    enemy_handle_(0)
+    enemy_handle_(0),
+    bullet_manager_(nullptr)
 {
 }
 
@@ -40,6 +41,11 @@ void EnemyBase::RemoveImageHandle()
     DeleteGraph(enemy_handle_);
     enemy_handle_ = 0;
   }
+}
+
+void EnemyBase::SetBulletManager(BulletManager *bullet_manager)
+{
+  bullet_manager_ = bullet_manager;
 }
 
 void EnemyBase::SetPosX(int pos_x)

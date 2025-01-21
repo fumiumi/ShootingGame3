@@ -92,3 +92,18 @@ void BulletManager::LoadBulletImageHandle()
     }
   }
 }
+
+const BulletManager::BulletList &BulletManager::GetBulletList(BulletKind bullet_kind) const
+{
+  if (bullet_kind == BulletKind::kPlayer)
+  {
+    return bullet_list_map_.at(BulletKind::kPlayer);
+  }
+  else if (bullet_kind == BulletKind::kEnemy)
+  {
+    return bullet_list_map_.at(BulletKind::kEnemy);
+  }
+
+  static BulletList empty_list;
+  return empty_list;
+}

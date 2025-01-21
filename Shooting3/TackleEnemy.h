@@ -15,12 +15,9 @@ public:
 
   void LoadImageHandle() override;
 
-  void GetBulletManager(BulletManager *bullet_manager);
+  void GetBulletList(std::vector<BulletBase *> &bullet_list) override;
 
   void CheckHitBullet() override;
 
   // ハンドルの解放は基底クラスで実装済み
-
-private:
-  BulletManager *bullet_manager_;
 };

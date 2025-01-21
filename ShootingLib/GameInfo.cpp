@@ -12,6 +12,9 @@ const int kPlayerImageWidth = 64;
 const int kPlayerImageHeight = 64;
 const int kTackleEnemyWidth = 64;
 const int kTackleEnemyHeight = 64;
+
+const int kPlayerBulletWidth = 32;
+const int kPlayerBulletHeight = 32;
 }
 
 GameInfo *GameInfo::instance_ = nullptr;
@@ -75,6 +78,16 @@ int GameInfo::GetTackleEnemyImageWidth()
 int GameInfo::GetTackleEnemyImageHeight()
 {
   return kTackleEnemyHeight;
+}
+
+int GameInfo::GetPlayerBulletImageWidth()
+{
+  return kPlayerBulletWidth;
+}
+
+int GameInfo::GetPlayerBulletImageHeight()
+{
+  return kPlayerBulletHeight;
 }
 
 int GameInfo::GetColorBit()

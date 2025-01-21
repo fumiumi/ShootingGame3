@@ -44,6 +44,9 @@ public:
   int GetTackleEnemyImageWidth();
   int GetTackleEnemyImageHeight();
 
+  int GetPlayerBulletImageWidth();
+  int GetPlayerBulletImageHeight();
+
 	int GetColorBit();
 
 	bool IsDebugDisplay();

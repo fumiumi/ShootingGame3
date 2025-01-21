@@ -6,8 +6,6 @@
 
 class BulletManager : public Task
 {
-  friend class TackleEnemy;
-
 public:
   enum class BulletKind
   {
@@ -32,8 +30,12 @@ public:
 
   void LoadBulletImageHandle();
 
-private:
   using BulletList = std::vector<BulletBase *>;
+  // BulletListは渡すが、弾の追加、削除はさせない
+  // ただし、弾の更新、描画は許可
+  const BulletList &GetBulletList(BulletKind bullet_kind) const;
+
+private:
   std::unordered_map<BulletKind, BulletList> bullet_list_map_;
 
 };

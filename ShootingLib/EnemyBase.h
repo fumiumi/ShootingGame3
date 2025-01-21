@@ -1,5 +1,6 @@
 #pragma once
 #include "BulletBase.h"
+#include "BulletManager.h"
 #include <vector>
 
 class EnemyBase
@@ -18,6 +19,9 @@ public:
   virtual void LoadImageHandle();
 
   virtual void GetBulletList(std::vector<BulletBase *> &bullet_list);
+
+  // リストがプレイヤーの弾リストであることを確認する処理が必要なので仮想化
+  virtual void SetBulletManager(BulletManager *bullet_manager);
 
   virtual void CheckHitBullet();
 
@@ -38,6 +42,7 @@ public:
   bool GetIsActive() const;
   void SetIsActive(bool is_active);
 
+
   void CorrectPosX();
 
 protected:
@@ -52,5 +57,5 @@ protected:
 
   int enemy_handle_;
 
-  std::vector<BulletBase *> bullet_list_;
+  BulletManager *bullet_manager_;
 };
