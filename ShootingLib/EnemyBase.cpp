@@ -36,6 +36,10 @@ void EnemyBase::SetBulletKind(BulletManager::BulletKind bullet_kind)
 {
 }
 
+void EnemyBase::Death()
+{
+}
+
 void EnemyBase::RemoveImageHandle()
 {
   if (enemy_handle_ != 0)

@@ -20,6 +20,7 @@ TackleEnemy::TackleEnemy()
   // 直進しかできない木偶の坊
   velocity_x_ = 0;
   velocity_y_ = kTackleEnemyVelocity;
+  SetBulletKind(BulletManager::BulletKind::kPlayer);
 }
 
 TackleEnemy::~TackleEnemy()
@@ -30,28 +31,46 @@ void TackleEnemy::Update(float delta_time)
 {
   GameInfo *game_info = GameInfo::GetInstance();
 
-  if (is_dead_)
+  if (!is_active_ )
   {
     return;
   }
 
+  // 前フレームで死亡していたら非アクティブにする
+  if (is_dead_)
+  {
+    is_active_ = false;
+  }
+
   pos_y_ += velocity_y_;
 
+  // 弾との当たり判定を走査
+  CheckHitBullet();
+
+  // 画面外に出たら非アクティブにする
   if (pos_y_ >= game_info->GetResolutionY())
   {
-    is_dead_ = true;
+    Death();
     is_active_ = false;
   }
 }
 
 void TackleEnemy::Render()
 {
-  if (is_dead_)
+  if (!is_active_ )
   {
     return;
   }
 
-  DrawGraph(pos_x_, pos_y_, enemy_handle_, TRUE);
+  if (!is_dead_)
+  {
+    DrawGraph(pos_x_, pos_y_, enemy_handle_, TRUE);
+  }
+  else
+  {
+    // update()でDeath()した場合はエネミーの爆散を描画
+    // エフェクトマネージャをじっそうするまでは描画しないことで代用
+  }
 }
 
 void TackleEnemy::LoadImageHandle()
@@ -93,8 +112,8 @@ void TackleEnemy::CheckHitBullet()
 
     if (distance <= std::pow(radius_enemy + radius_bullet, 2)) // 暗黙の型変換
     {
-      is_dead_ = true;
-      is_active_ = false;
+      // エネミーは爆破処理をするので、Deathしてもまだactiveのまま
+      Death();
       bullet->SetIsActive(false);
 
       break;
@@ -102,6 +121,9 @@ void TackleEnemy::CheckHitBullet()
   }
 }
 
-
+void TackleEnemy::Death()
+{
+  is_dead_ = true;
+}
 
 // ハンドルの解放は基底クラスで実装済み

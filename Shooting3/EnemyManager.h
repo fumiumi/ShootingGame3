@@ -22,12 +22,15 @@ public:
   void Initialize(int enemy_num);
 
   void AddEnemy(EnemyBase *enemy);
+
+  void AddBulletManagerToEnemy(BulletManager *bullet_manager);
   
   void Destroy();
 
   void LoadEnemyImageHandle();
 
-  std::vector<EnemyBase *> &GetEnemyList() { return enemy_list_; }
+  const std::vector<EnemyBase *> &GetEnemyList() const;
+  EnemyBase *GetBossEnemy() const;
 
 private:
   std::vector<EnemyBase *> enemy_list_;

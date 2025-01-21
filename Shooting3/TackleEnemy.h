@@ -20,5 +20,7 @@ public:
 
   void CheckHitBullet() override;
 
+  void Death() override;
+
   // ハンドルの解放は基底クラスで実装済み
 };

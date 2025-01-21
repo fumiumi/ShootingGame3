@@ -22,6 +22,8 @@ public:
   
   virtual void SetBulletKind(BulletManager::BulletKind bullet_kind);
 
+  virtual void Death();
+
   void RemoveImageHandle();
 
   void SetBulletManager(BulletManager *bullet_manager);
