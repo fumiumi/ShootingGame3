@@ -20,12 +20,11 @@ public:
 
   virtual void GetBulletList(std::vector<BulletBase *> &bullet_list);
 
-  // リストがプレイヤーの弾リストであることを確認する処理が必要なので仮想化
-  virtual void SetBulletManager(BulletManager *bullet_manager);
-
   virtual void CheckHitBullet();
 
   void RemoveImageHandle();
+
+  void SetBulletManager(BulletManager *bullet_manager);
 
   void SetPosX(int pos_x);
   void SetPosY(int pos_y);
